@@ -1,0 +1,38 @@
+<header>
+  <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <img src="../assets/images/logo_header.png" alt="" id="logo" height="32">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a routerLink="home" class="nav-link" routerLinkActive="active">Home</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="preferences" class="nav-link" routerLinkActive="active">Mis propiedades</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="play" class="nav-link" routerLinkActive="active">Actividad</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="records" class="nav-link" routerLinkActive="active">Balances</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="records" class="nav-link" routerLinkActive="active">Documentos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<section>
+  <router-outlet></router-outlet>
+</section>
+<footer>
+  <p>Autor: Oliver Fernández García<br>
+  <a href="mailto:hege@example.com">oliver.fernandez@alumnos.upm.es</a></p>
+</footer>
