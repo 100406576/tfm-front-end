@@ -1,1 +1,96 @@
-<p>register works!</p>
+<div>
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white corners">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-md-5 mt-md-4 pb-2">
+
+                            <h2 class="fw-bold mb-2 text-uppercase">Creación de cuenta</h2>
+                            <p class="text-white-50 mb-5">Por favor, introduce tus datos</p>
+
+                            <form id="registerForm" #registerForm="ngForm"
+                                (ngSubmit)="register(registerForm); registerForm.control.markAllAsTouched()">
+                                <div class="form-floating mb-4">
+                                    <input [(ngModel)]="newUser.name" name="name" id="name" #name="ngModel" type="text" class="form-control" placeholder="Nombre*" autocomplete="off" required />
+                                    <label for="name">Nombre</label>
+                                    <div *ngIf="name.errors?.['required'] && (name.dirty || name.touched)" class="alert alert-danger">
+                                        El apellido es obligatorio
+                                    </div>
+                                </div>
+                                
+                                <div class="form-floating mb-4">
+                                    <input [(ngModel)]="newUser.lastName" name="lastName" id="lastName" #lastName="ngModel" type="text" class="form-control" placeholder="Apellido" autocomplete="off" required />
+                                    <label for="lastName">Apellido</label>
+                                    <div *ngIf="lastName.errors?.['required'] && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                                        El apellido es obligatorio
+                                    </div>
+                                </div>                                
+
+                                <div class="form-floating mb-4">
+                                    <input [(ngModel)]="newUser.username" name="username" id="username"
+                                        #username="ngModel" type="text" class="form-control"
+                                        placeholder="Nombre de usuario" autocomplete="off" required
+                                        (blur)="checkUsername()" />
+                                    <label for="username">Nombre de usuario</label>
+                                    <div *ngIf="username.errors?.['required'] && (username.dirty || username.touched)"
+                                        class="alert alert-danger">
+                                        El nombre de usuario es obligatorio
+                                    </div>
+                                    <div *ngIf="usernameExists" class="alert alert-danger">
+                                        Ese nombre de usuario ya existe
+                                    </div>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input [(ngModel)]="newUser.email" name="email" id="email" type="email"
+                                        #email="ngModel" class="form-control" placeholder="Email" autocomplete="off"
+                                        required email />
+                                    <label for="email">Email</label>
+                                    <div *ngIf="email.errors?.['required'] && (email.dirty || email.touched)"
+                                        class="alert alert-danger">
+                                        El email es obligatorio
+                                    </div>
+                                    <div *ngIf="email.errors?.['email']" class="alert alert-danger">
+                                        Porfavor, introduce un email correcto.
+                                    </div>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input [(ngModel)]="newUser.password" name="password" id="password"
+                                        #password="ngModel" type="password" class="form-control"
+                                        placeholder="Contraseña" autocomplete="off" required />
+                                    <label for="password">Contraseña</label>
+                                    <div *ngIf="password.errors?.['required'] && (password.dirty || password.touched)"
+                                        class="alert alert-danger">
+                                        La contraseña es obligatoria
+                                    </div>
+                                </div>
+
+                                <div class="form-floating">
+                                    <input [(ngModel)]="repeatPassword" name="confirmPassword" id="confirmPassword"
+                                        #confirmPassword="ngModel" type="password" class="form-control"
+                                        placeholder="Repite la contraseña" autocomplete="off" required />
+                                    <label for="repeatPassword">Repite la contraseña</label>
+                                    <div *ngIf="!isTheSamePassword() && (password.dirty || password.touched)"
+                                        class="alert alert-danger">
+                                        Ambas contraseñas deben ser iguales
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-outline-light btn-lg px-5 mt-5">Register</button>
+                            </form>
+
+                            <div>
+                                <p class="mb-0 mt-5">Have already an account?
+                                    <a href="javascript:void(0)" (click)="redirectToLogin()" class="fw-bold">Login
+                                        here</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
