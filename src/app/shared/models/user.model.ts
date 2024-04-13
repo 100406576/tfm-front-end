@@ -4,9 +4,9 @@ export class User {
     username: string;
     password: string;
     email: string;
-    phoneNumber?: string;
-    dni?: string;
-    gender?: 'male' | 'female';
+    //phoneNumber?: string;
+    //dni?: string;
+    //gender?: 'male' | 'female';
     
     constructor() {
         this.name = '';
