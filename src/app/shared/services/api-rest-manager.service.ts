@@ -20,4 +20,9 @@ export class ApiRestManagerService {
     const body = user;
     return this.http.post(url, body, { observe: 'response', headers: { 'Content-Type': 'application/json' } });
   }
+
+  login(credentials: { username: string, password: string }) {
+    const url = `${this.baseurl}users/login?username=${credentials.username}&password=${credentials.password}`;
+    return this.http.get(url, { observe: 'response' });
+  }
 }
