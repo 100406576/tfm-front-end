@@ -6,8 +6,8 @@
     border-radius: 1rem !important;
 }
 
-.background-image {
-    background-image: url('./assets/images/background1.jpg');
+.background-image-register-login {
+    background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.3)), url('./assets/images/background1.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

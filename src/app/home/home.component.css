@@ -1,0 +1,14 @@
+#homeImage {
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('https://wallpaperaccess.com/full/508858.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    padding-bottom: 40vh
+}
+
+@media (min-width: 992px) {
+    #homeImage {
+        margin-top: -58.59px;
+    }
+}
