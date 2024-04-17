@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   }
 
   logOut() {
-    this.auth.removeToken();
+    this.auth.removeSession();
     this.toastr.info('Sesión cerrada correctamente', 'Logout', {
       timeOut: 3000,
       positionClass: 'toast-bottom-right'

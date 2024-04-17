@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
+import { AuthService } from './auth.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +10,28 @@ import { User } from '../models/user.model';
 export class ApiRestManagerService {
   private baseurl = 'http://localhost:3000/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private auth: AuthService
+  ) { }
 
-  existUsername(username: string) {
+  getUserProfile() {
+    const username = this.auth.getCurrentUsername();
     const url = `${this.baseurl}users/${username}`;
-    return this.http.get(url, { observe: 'response' });
+    return this.http.get<User>(url).pipe(
+      map((response: any) => {
+        const user: User = {
+          name: response.name,
+          lastName: response.lastName,
+          username: response.username,
+          password: response.password,
+          email: response.email,
+          phoneNumber: response.phoneNumber,
+          dni: response.dni,
+          gender: response.gender
+        };
+        return user;
+      })
+    );
   }
 
   register(user: User) {

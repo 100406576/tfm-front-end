@@ -33,7 +33,7 @@
             <a *ngIf="!isLoggedIn" routerLink="login" class="nav-link" routerLinkActive="active">Login</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="isLoggedIn" routerLink="" class="nav-link" routerLinkActive="active">Mi perfil</a>
+            <a *ngIf="isLoggedIn" routerLink="profile" class="nav-link" routerLinkActive="active">Mi perfil</a>
           </li>
           <li class="nav-item">
             <a *ngIf="isLoggedIn" class="nav-link" id="logoutNavItem" href="javascript:void(0)" (click)="logOut()">Log out</a>

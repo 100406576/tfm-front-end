@@ -1,0 +1,18 @@
+<div *ngIf="user">
+    <h2>User Profile</h2>
+    <ul>
+      <li><strong>Name:</strong> {{ user.name }}</li>
+      <li><strong>Last Name:</strong> {{ user.lastName }}</li>
+      <li><strong>Username:</strong> {{ user.username }}</li>
+      <li><strong>Email:</strong> {{ user.email }}</li>
+      <li *ngIf="user.phoneNumber"><strong>Phone Number:</strong> {{ user.phoneNumber }}</li>
+      <li *ngIf="user.dni"><strong>DNI:</strong> {{ user.dni }}</li>
+      <li *ngIf="user.gender"><strong>Gender:</strong> {{ user.gender }}</li>
+      <!-- Agrega más campos según sea necesario -->
+    </ul>
+  </div>
+  
+  <div *ngIf="!user">
+    <p>Loading user profile...</p>
+  </div>
+  

@@ -12,12 +12,21 @@ export class AuthService {
     return sessionStorage.getItem('jwtToken');
   }
 
+  getCurrentUsername(): string | null {
+    return sessionStorage.getItem('currentUsername');
+  }
+
+  setCurrentUsername(username: string): void {
+    sessionStorage.setItem('currentUsername', username);
+  }
+
   setToken(jwtToken: string): void {
     sessionStorage.setItem('jwtToken', jwtToken);
     this.changeAuthStatus(true);
   }
 
-  removeToken() {
+  removeSession() {
+    sessionStorage.removeItem('currentUsername');
     sessionStorage.removeItem('jwtToken');
     this.changeAuthStatus(false);
   }

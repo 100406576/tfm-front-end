@@ -13,13 +13,15 @@ import { ApiRestManagerService } from './shared/services/api-rest-manager.servic
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './shared/services/auth.service';
 import { RequestInterceptor, ResponseInterceptor } from './shared/services/interceptor.service';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

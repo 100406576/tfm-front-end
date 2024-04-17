@@ -30,6 +30,7 @@ export class LoginComponent {
     }
     this.apiRestManager.login(this.credentials).subscribe({
       next: (response: HttpResponse<any>) => {
+        this.auth.setCurrentUsername(this.credentials.username);
         this.auth.setToken(response.headers.get('Authorization')!);
         this.toastr.success('Login existoso', 'Login', {
           timeOut: 3000,
