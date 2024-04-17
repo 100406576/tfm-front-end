@@ -35,15 +35,11 @@
                                 <div class="form-floating mb-4">
                                     <input [(ngModel)]="newUser.username" name="username" id="username"
                                         #username="ngModel" type="text" class="form-control"
-                                        placeholder="Nombre de usuario" autocomplete="off" required
-                                        (blur)="checkUsername()" />
+                                        placeholder="Nombre de usuario" autocomplete="off" required/>
                                     <label for="username">Nombre de usuario</label>
                                     <div *ngIf="username.errors?.['required'] && (username.dirty || username.touched)"
                                         class="alert alert-danger">
                                         El nombre de usuario es obligatorio
-                                    </div>
-                                    <div *ngIf="usernameExists" class="alert alert-danger">
-                                        Ese nombre de usuario ya existe
                                     </div>
                                 </div>
 

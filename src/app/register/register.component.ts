@@ -14,7 +14,6 @@ import { ToastrService } from 'ngx-toastr';
 export class RegisterComponent {
 
   newUser: User = new User();
-  usernameExists = false;
   repeatPassword = '';
 
   constructor(
@@ -22,24 +21,6 @@ export class RegisterComponent {
     private apiRestManager: ApiRestManagerService,
     private toastr: ToastrService
   ) { }
-
-  checkUsername(): void {
-    console.log('asdjnaskd');
-    if (this.newUser.username == '') {
-      return;
-    }
-    this.apiRestManager.existUsername(this.newUser.username).subscribe({
-      next: (response: HttpResponse<any>) => {
-        if (response.status == 200) {
-          this.usernameExists = true;
-        }
-      },
-      error: (error: any) => {
-        console.error(error);
-        this.usernameExists = false;
-      }
-    });
-  }
 
   isTheSamePassword(): boolean {
     if (this.newUser.password != this.repeatPassword) {
@@ -50,7 +31,7 @@ export class RegisterComponent {
   }
 
   register(registerForm: NgForm): void {
-    if (registerForm.invalid || !this.isTheSamePassword() || this.usernameExists) {
+    if (registerForm.invalid || !this.isTheSamePassword()) {
       return;
     }
     this.apiRestManager.register(this.newUser).subscribe({
