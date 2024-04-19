@@ -6,7 +6,7 @@ import { AuthService } from './../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginRegisterGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
 
   constructor(private auth: AuthService, private router: Router) { }
 
@@ -15,8 +15,17 @@ export class LoginRegisterGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isLoggedIn = this.auth.hasToken();
     if (isLoggedIn) {
-      this.router.navigate(['/home']);
+      if (state.url.includes('/register') || state.url.includes('/login')) {
+        this.router.navigate(['/home']);
+        return false;
+      }
+      return true;
+    } else {
+      if ((state.url !== '/register') && (state.url !== '/login')) {
+        this.router.navigate(['/login']);
+        return false;
+      }
+      return true;
     }
-    return !isLoggedIn;
   }
 }

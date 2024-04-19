@@ -7,16 +7,19 @@ import { User } from '../shared/models/user.model';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
+
 export class ProfileComponent implements OnInit {
   user: User = new User();
+  isEditing: boolean = false;
 
-  constructor(private apiManager: ApiRestManagerService) { }
+  constructor(private apiManager: ApiRestManagerService
+  ) {}
 
-  ngOnInit(): void {
-    this.getUserProfile();
+  ngOnInit() {
+    this.loadUserData();
   }
-  
-  getUserProfile() {
+
+  loadUserData() {
     this.apiManager.getUserProfile().subscribe({
       next: (user: User) => {
         this.user = user;
@@ -25,5 +28,14 @@ export class ProfileComponent implements OnInit {
         console.log(error);
       }
     });
+  }
+  
+
+  onEditClicked() {
+    this.isEditing = !this.isEditing;
+  }
+
+  onDeletedClicked() {
+    alert("Borrar aún no está implementado")
   }
 }

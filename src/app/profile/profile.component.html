@@ -1,18 +1,65 @@
-<div *ngIf="user">
-    <h2>User Profile</h2>
-    <ul>
-      <li><strong>Name:</strong> {{ user.name }}</li>
-      <li><strong>Last Name:</strong> {{ user.lastName }}</li>
-      <li><strong>Username:</strong> {{ user.username }}</li>
-      <li><strong>Email:</strong> {{ user.email }}</li>
-      <li *ngIf="user.phoneNumber"><strong>Phone Number:</strong> {{ user.phoneNumber }}</li>
-      <li *ngIf="user.dni"><strong>DNI:</strong> {{ user.dni }}</li>
-      <li *ngIf="user.gender"><strong>Gender:</strong> {{ user.gender }}</li>
-      <!-- Agrega más campos según sea necesario -->
-    </ul>
+<section class="background">
+  <div class="container py-5 pt-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-8 mb-4 mb-lg-0">
+        <div class="card border-secondary mb-3" style="border-radius: .5rem;">
+          <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center text-white">
+              <img src="../../assets/images/{{ user.gender === 'female' ? 'female_avatar.png' : 'male_avatar.png' }}"
+                id="avatar" class="img-fluid mt-5 mb-4" />
+              <h2>{{ user.username }}</h2>
+              <img src="../../assets/images/edit.png" id="editProfile" class="img-fluid mt-5 mx-4" (click)="onEditClicked()">
+              <img src="../../assets/images/delete.png" id="deleteProfile" class="img-fluid mt-5 mx-4"
+                (click)="onDeletedClicked()">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h6>Información de contacto</h6>
+                <hr class="mt-0 mb-3">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Nombre</h6>
+                    <input type="text" [(ngModel)]="user.name" class="form-control" [disabled]="!isEditing" />
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Apellido</h6>
+                    <input type="text" [(ngModel)]="user.lastName" class="form-control" [disabled]="!isEditing" />
+                  </div>
+                </div>
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Email</h6>
+                    <input type="text" [(ngModel)]="user.email" class="form-control" [disabled]="!isEditing" />
+                  </div>
+                  <div class="col-6 mb-4">
+                    <h6>Teléfono</h6>
+                    <input type="text" [(ngModel)]="user.phoneNumber" class="form-control" [disabled]="!isEditing" />
+                  </div>
+                </div>
+                <h6>Información adicional</h6>
+                <hr class="mt-0 mb-3">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>DNI</h6>
+                    <input type="text" [(ngModel)]="user.dni" class="form-control" [disabled]="!isEditing" />
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Género</h6>
+                    <select class="form-control" [(ngModel)]="user.gender" [disabled]="!isEditing">
+                      <option value="male">Hombre</option>
+                      <option value="female">Mujer</option>
+                    </select>
+                  </div>
+                </div>
+                <div *ngIf="isEditing" class="d-flex justify-content-center mt-1">
+                  <button class="btn btn-primary mx-2">Guardar</button>
+                  <button class="btn btn-danger mx-2">Cancelar</button>
+              </div>              
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
-  <div *ngIf="!user">
-    <p>Loading user profile...</p>
-  </div>
-  
+</section>
