@@ -6,10 +6,10 @@
           <div class="row g-0">
             <div class="col-md-4 gradient-custom text-center text-white">
               <img src="../../assets/images/{{ user.gender === 'female' ? 'female_avatar.png' : 'male_avatar.png' }}"
-                id="avatar" class="img-fluid mt-5 mb-4" />
+                id="avatar" alt="Avatar" class="img-fluid mt-5 mb-4" />
               <h2>{{ user.username }}</h2>
-              <img src="../../assets/images/edit.png" id="editProfile" class="img-fluid mt-5 mx-4" (click)="onEditClicked()">
-              <img src="../../assets/images/delete.png" id="deleteProfile" class="img-fluid mt-5 mx-4"
+              <img src="../../assets/images/edit.png" id="editProfile" alt="Editar" class="img-fluid mt-5 mx-4" (click)="onEditClicked()">
+              <img src="../../assets/images/delete.png" id="deleteProfile" alt="Borrar" class="img-fluid mt-5 mx-4"
                 (click)="onDeletedClicked()">
             </div>
             <div class="col-md-8">

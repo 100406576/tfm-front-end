@@ -1,12 +1,13 @@
 .gradient-custom {
     /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right bottom, rgba(142, 140, 132, 1), rgba(62, 63, 58, 1));
-
+    background: -webkit-linear-gradient(bottom right, rgba(142, 140, 132, 1), rgba(62, 63, 58, 1));
+    
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right bottom, rgba(142, 140, 132, 1), rgba(62, 63, 58, 1));
+    background: linear-gradient(to bottom right, rgba(142, 140, 132, 1), rgba(62, 63, 58, 1));
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;
 }
+
 
 #avatar {
     width: 140px
