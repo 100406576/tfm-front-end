@@ -1,6 +1,6 @@
 # TfmFrontEnd
 
-[![Angular - Tests](https://github.com/oliver-upm/tfm-front-end/actions/workflows/angular-test-sonar.yml/badge.svg)](https://github.com/oliver-upm/tfm-front-end/actions/workflows/angular-test-sonar.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=oliver-upm%3Atfm-front-end&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=oliver-upm%3Atfm-front-end)
+[![Angular - Tests](https://github.com/100406576/tfm-front-end/actions/workflows/angular-test-sonar.yml/badge.svg)](https://github.com/100406576/tfm-front-end/actions/workflows/angular-test-sonar.yml)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
 
