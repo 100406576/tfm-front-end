@@ -19,21 +19,36 @@
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
                     <h6>Nombre</h6>
-                    <input type="text" [(ngModel)]="user.name" class="form-control" [disabled]="!isEditing" />
+                    <input type="text" [(ngModel)]="user.name" name="name" id="name" #name="ngModel" class="form-control" [disabled]="!isEditing" required />
+                    <div *ngIf="name.errors?.['required'] && (name.dirty || name.touched)" class="alert alert-danger">
+                      El nombre es obligatorio
+                    </div>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>Apellido</h6>
-                    <input type="text" [(ngModel)]="user.lastName" class="form-control" [disabled]="!isEditing" />
+                    <input type="text" [(ngModel)]="user.lastName" name="lastName" id="lastName" #lastName="ngModel" class="form-control" [disabled]="!isEditing" required />
+                    <div *ngIf="lastName.errors?.['required'] && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                      El apellido es obligatorio
+                    </div>
                   </div>
                 </div>
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
                     <h6>Email</h6>
-                    <input type="text" [(ngModel)]="user.email" class="form-control" [disabled]="!isEditing" />
+                    <input type="email" [(ngModel)]="user.email" name="email" id="email" #email="ngModel" class="form-control" [disabled]="!isEditing" required email />
+                    <div *ngIf="email.errors?.['required'] && (email.dirty || email.touched)" class="alert alert-danger">
+                      El email es obligatorio
+                    </div>
+                    <div *ngIf="email.errors?.['email'] && (email.dirty || email.touched)" class="alert alert-danger">
+                      Email incorrecto
+                    </div>
                   </div>
                   <div class="col-6 mb-4">
                     <h6>Teléfono</h6>
-                    <input type="text" [(ngModel)]="user.phoneNumber" class="form-control" [disabled]="!isEditing" />
+                    <input type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" id="phoneNumber" #phoneNumber="ngModel" class="form-control" [disabled]="!isEditing" required pattern="^\d{9}$" />
+                    <div *ngIf="phoneNumber.errors?.['pattern']" class="alert alert-danger">
+                      No es un teléfono válido
+                    </div>
                   </div>
                 </div>
                 <h6>Información adicional</h6>
@@ -41,20 +56,24 @@
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
                     <h6>DNI</h6>
-                    <input type="text" [(ngModel)]="user.dni" class="form-control" [disabled]="!isEditing" />
+                    <input type="text" [(ngModel)]="user.dni" name="dni" id="dni" #dni="ngModel" class="form-control" [disabled]="!isEditing" required pattern="^\d{8}[A-Za-z]$" />
+                    <div *ngIf="dni.errors?.['pattern']" class="alert alert-danger">
+                      No es un DNI válido
+                    </div>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>Género</h6>
                     <select class="form-control" [(ngModel)]="user.gender" [disabled]="!isEditing">
-                      <option value="male">Hombre</option>
-                      <option value="female">Mujer</option>
+                        <option value="">Seleccionar</option>
+                        <option value="male">Hombre</option>
+                        <option value="female">Mujer</option>
                     </select>
                   </div>
                 </div>
                 <div *ngIf="isEditing" class="d-flex justify-content-center mt-1">
-                  <button class="btn btn-primary mx-2">Guardar</button>
-                  <button class="btn btn-danger mx-2">Cancelar</button>
-              </div>              
+                  <button class="btn btn-primary mx-2" (click)="onSaveEditClicked()">Guardar</button>
+                  <button class="btn btn-danger mx-2" (click)="onCancelEditClicked()">Cancelar</button>
+                </div>              
               </div>
             </div>
           </div>

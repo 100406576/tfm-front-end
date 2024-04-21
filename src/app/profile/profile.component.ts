@@ -41,7 +41,40 @@ export class ProfileComponent implements OnInit {
 
 
   onEditClicked() {
-    this.isEditing = !this.isEditing;
+    this.isEditing = true;
+  }
+
+  onSaveEditClicked() {
+    this.apiManager.updateUser(this.user).subscribe({
+      next: (response) => {
+        this.toastr.success('Usuario editado correctamente', 'Editado', {
+          timeOut: 3000,
+          positionClass: 'toast-bottom-right',
+        });
+        this.isEditing = false;
+        this.loadUserData();
+      },
+      error: (error) => {
+        let errorMsg = '';
+        switch (error.status) {
+          case 404:
+            errorMsg = "El usuario que intentas editar no existe";
+            break;
+          default:
+            errorMsg = "No se ha podido editar el usuario";
+            break;
+        }
+        this.toastr.error(errorMsg, 'Editado', {
+          timeOut: 3000,
+          positionClass: 'toast-bottom-right',
+        });
+      }
+    });
+  }
+
+  onCancelEditClicked() {
+    this.isEditing = false;
+    this.loadUserData();
   }
 
   onDeletedClicked() {

@@ -45,6 +45,12 @@ export class ApiRestManagerService {
     return this.http.get(url, { observe: 'response' });
   }
 
+  updateUser(user: User) {
+    const username = this.auth.getCurrentUsername();
+    const url = `${this.baseurl}users/${username}`;
+    return this.http.put(url, user, { observe: 'response', headers: { 'Content-Type': 'application/json' } });
+  }
+
   deleteUser() {
     const username = this.auth.getCurrentUsername();
     const url = `${this.baseurl}users/${username}`;
