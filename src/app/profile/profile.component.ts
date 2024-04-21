@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiRestManagerService } from '../shared/services/api-rest-manager.service';
 import { User } from '../shared/models/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -12,8 +17,12 @@ export class ProfileComponent implements OnInit {
   user: User = new User();
   isEditing: boolean = false;
 
-  constructor(private apiManager: ApiRestManagerService
-  ) {}
+  constructor(private apiManager: ApiRestManagerService,
+    private auth: AuthService,
+    public dialog: MatDialog,
+    private toastr: ToastrService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.loadUserData();
@@ -36,6 +45,38 @@ export class ProfileComponent implements OnInit {
   }
 
   onDeletedClicked() {
-    //dialogo de confirmación
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: 'Borrar usuario', message: '¿Estás seguro de que deseas eliminar tu cuenta?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiManager.deleteUser().subscribe({
+          next: (response) => {
+            this.auth.removeSession();
+            this.toastr.success('Usuario borrado correctamente', 'Borrado', {
+              timeOut: 3000,
+              positionClass: 'toast-bottom-right',
+            });
+            this.router.navigate(['/login']);
+          },
+          error: (error) => {
+            let errorMsg = '';
+            switch (error.status) {
+              case 404:
+                errorMsg = "El usuario que intentas eliminar no existe";
+                break;
+              default:
+                errorMsg = "No se ha podido borrar el usuario";
+                break;
+            }
+            this.toastr.error(errorMsg, 'Borrado', {
+              timeOut: 3000,
+              positionClass: 'toast-bottom-right',
+            });
+          }
+        });
+      }
+    });
   }
 }

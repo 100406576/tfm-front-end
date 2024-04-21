@@ -13,6 +13,8 @@ import { ApiRestManagerService } from './shared/services/api-rest-manager.servic
 import { AuthService } from './shared/services/auth.service';
 import { RequestInterceptor, ResponseInterceptor } from './shared/services/interceptor.service';
 import { ProfileComponent } from './profile/profile.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { ProfileComponent } from './profile/profile.component';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +31,7 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatDialogModule,
     ToastrModule.forRoot(),
   ],
   providers: [
