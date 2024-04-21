@@ -13,6 +13,8 @@
                 (click)="onDeletedClicked()">
             </div>
             <div class="col-md-8">
+              <form id="editForm" #editForm="ngForm"
+                                (ngSubmit)="onSaveEditClicked(editForm); editForm.control.markAllAsTouched()">
               <div class="card-body p-4">
                 <h6>Información de contacto</h6>
                 <hr class="mt-0 mb-3">
@@ -45,7 +47,7 @@
                   </div>
                   <div class="col-6 mb-4">
                     <h6>Teléfono</h6>
-                    <input type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" id="phoneNumber" #phoneNumber="ngModel" class="form-control" [disabled]="!isEditing" required pattern="^\d{9}$" />
+                    <input type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" id="phoneNumber" #phoneNumber="ngModel" class="form-control" [disabled]="!isEditing" pattern="^\d{9}$" />
                     <div *ngIf="phoneNumber.errors?.['pattern']" class="alert alert-danger">
                       No es un teléfono válido
                     </div>
@@ -56,25 +58,26 @@
                 <div class="row pt-1">
                   <div class="col-6 mb-3">
                     <h6>DNI</h6>
-                    <input type="text" [(ngModel)]="user.dni" name="dni" id="dni" #dni="ngModel" class="form-control" [disabled]="!isEditing" required pattern="^\d{8}[A-Za-z]$" />
+                    <input type="text" [(ngModel)]="user.dni" name="dni" id="dni" #dni="ngModel" class="form-control" [disabled]="!isEditing" pattern="^\d{8}[A-Za-z]$" />
                     <div *ngIf="dni.errors?.['pattern']" class="alert alert-danger">
                       No es un DNI válido
                     </div>
                   </div>
                   <div class="col-6 mb-3">
                     <h6>Género</h6>
-                    <select class="form-control" [(ngModel)]="user.gender" [disabled]="!isEditing">
-                        <option value="">Seleccionar</option>
-                        <option value="male">Hombre</option>
-                        <option value="female">Mujer</option>
+                    <select [(ngModel)]="user.gender" name="gender" id="gender" class="form-control" [disabled]="!isEditing">
+                      <option value="" selected>Sin definir</option>
+                      <option value="male">Hombre</option>
+                      <option value="female">Mujer</option>
                     </select>
-                  </div>
+                  </div>                  
                 </div>
                 <div *ngIf="isEditing" class="d-flex justify-content-center mt-1">
-                  <button class="btn btn-primary mx-2" (click)="onSaveEditClicked()">Guardar</button>
+                  <button class="btn btn-primary mx-2" type="submit">Guardar</button>
                   <button class="btn btn-danger mx-2" (click)="onCancelEditClicked()">Cancelar</button>
                 </div>              
               </div>
+              </form>
             </div>
           </div>
         </div>

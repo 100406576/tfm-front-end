@@ -6,6 +6,7 @@ import { ConfirmationDialogComponent } from '../shared/components/confirmation-d
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -44,7 +45,10 @@ export class ProfileComponent implements OnInit {
     this.isEditing = true;
   }
 
-  onSaveEditClicked() {
+  onSaveEditClicked(editForm: NgForm) {
+    if(editForm.invalid) {
+      return;
+    }
     this.apiManager.updateUser(this.user).subscribe({
       next: (response) => {
         this.toastr.success('Usuario editado correctamente', 'Editado', {
