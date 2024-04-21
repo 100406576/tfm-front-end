@@ -44,4 +44,10 @@ export class ApiRestManagerService {
     const url = `${this.baseurl}users/login?username=${credentials.username}&password=${credentials.password}`;
     return this.http.get(url, { observe: 'response' });
   }
+
+  deleteUser() {
+    const username = this.auth.getCurrentUsername();
+    const url = `${this.baseurl}users/${username}`;
+    return this.http.delete(url, { observe: 'response' });
+  }
 }

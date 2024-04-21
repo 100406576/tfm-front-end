@@ -29,13 +29,13 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
-  
+
 
   onEditClicked() {
     this.isEditing = !this.isEditing;
   }
 
   onDeletedClicked() {
-    alert("Borrar aún no está implementado")
+    //dialogo de confirmación
   }
 }
