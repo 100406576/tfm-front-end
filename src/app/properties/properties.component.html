@@ -1,0 +1,52 @@
+<section class="background">
+  <mat-card>
+    <mat-card-content>
+      <mat-table #table [dataSource]="(properties | async) ?? []" class="mat-elevation-z8">
+        <!-- Property Name Column -->
+        <ng-container matColumnDef="propertyName">
+          <mat-header-cell *matHeaderCellDef> Nombre de la propiedad </mat-header-cell>
+          <mat-cell *matCellDef="let property"> {{property.propertyName}} </mat-cell>
+        </ng-container>
+
+        <!-- Address Column -->
+        <ng-container matColumnDef="address">
+          <mat-header-cell *matHeaderCellDef> Dirección </mat-header-cell>
+          <mat-cell *matCellDef="let property"> {{property.address}} </mat-cell>
+        </ng-container>
+
+        <!-- Cadastral Reference-->
+        <ng-container matColumnDef="cadastralReference">
+          <mat-header-cell *matHeaderCellDef> Referencia Catastral </mat-header-cell>
+          <mat-cell *matCellDef="let property"> {{property.cadastralReference}} </mat-cell>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <button class="action-button" (click)="onCreate()" mat-button mat-icon-button matSuffix>
+              <mat-icon color="warn">add</mat-icon>
+            </button>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let property">
+            <button class="action-button" (click)="onRead(property)" mat-button mat-icon-button matSuffix>
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button class="action-button" (click)="onEdit(property)" mat-button mat-icon-button matSuffix>
+              <mat-icon color="warn">mode_edit</mat-icon>
+            </button>
+            <button class="action-button" (click)="onDelete(property)" mat-button mat-icon-button matSuffix>
+              <mat-icon color="warn">close</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row
+          *matHeaderRowDef="['propertyName', 'address', 'cadastralReference', 'actions']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['propertyName', 'address', 'cadastralReference', 'actions']"></mat-row>
+      </mat-table>
+    </mat-card-content>
+  </mat-card>
+
+  <img
+    src="https://lh6.googleusercontent.com/proxy/3gttOuqZgRTn7EuyfMBXfW4uEronFzYU71MNR9p9zeBiRLWVryxguVtLQDbrNFzKq0KUqJVu3AbAlryAVsjS4quLNdGwILDV2QYrymNKZGrY1JPTPxVzP0J2Cfwucg=s0-d"
+    style="width: 50%; float: right;">
+</section>

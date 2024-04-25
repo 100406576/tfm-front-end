@@ -14,7 +14,11 @@ import { AuthService } from './shared/services/auth.service';
 import { RequestInterceptor, ResponseInterceptor } from './shared/services/interceptor.service';
 import { ProfileComponent } from './profile/profile.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
+import { PropertiesComponent } from './properties/properties.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,8 @@ import { ConfirmationDialogComponent } from './shared/components/confirmation-di
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    PropertiesComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +37,9 @@ import { ConfirmationDialogComponent } from './shared/components/confirmation-di
     FormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatCardModule,
+    MatTableModule,
+    MatIconModule,
     ToastrModule.forRoot(),
   ],
   providers: [
