@@ -68,4 +68,9 @@ export class ApiRestManagerService {
     const url = `${this.baseurl}properties/${property_id}`;
     return this.http.get<Property>(url);
   }
+
+  deleteProperty(property_id: string) {
+    const url = `${this.baseurl}properties/${property_id}`;
+    return this.http.delete(url, { observe: 'response' });
+  }
 }

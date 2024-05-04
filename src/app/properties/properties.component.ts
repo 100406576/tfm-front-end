@@ -4,6 +4,8 @@ import { Property } from '../shared/models/propery.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiRestManagerService } from '../shared/services/api-rest-manager.service';
 import { ReadPropertyDetailDialogComponent } from './read-property-detail/read-property-detail.component';
+import { ConfirmationDialogComponent } from '../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-properties',
@@ -14,8 +16,8 @@ export class PropertiesComponent {
   properties!: Observable<Property[]>;
 
   constructor(private apiManager: ApiRestManagerService,
-    private dialog: MatDialog
-  ) {
+    private dialog: MatDialog,
+    private toastr: ToastrService) {
     this.loadProperties();
   }
 
@@ -23,9 +25,31 @@ export class PropertiesComponent {
     this.properties = this.apiManager.getUserProperties();
   }
 
-  onDelete(_t54: any) {
-    alert('Method not implemented.');
-  }
+  onDelete(property: any) {
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: { title: 'Borrar propiedad', message: '¿Estás seguro de que deseas eliminar esta propiedad?' }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.apiManager.deleteProperty(property.property_id).subscribe({
+            next: (response) => {
+              this.loadProperties();
+              this.toastr.success('Propiedad borrada correctamente', 'Borrado', {
+                timeOut: 3000,
+                positionClass: 'toast-bottom-right',
+              });
+            },
+            error: (error) => {
+              this.toastr.error('No se ha podido borrar la propiedad', 'Borrado', {
+                timeOut: 3000,
+                positionClass: 'toast-bottom-right',
+              });
+            }
+          });
+        }
+      });
+    }
 
   onEdit(_t54: any) {
     alert('Method not implemented.');
