@@ -19,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { PropertiesComponent } from './properties/properties.component';
+import { ReadPropertyDetailDialogComponent } from './properties/read-property-detail/read-property-detail.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PropertiesComponent } from './properties/properties.component';
     LoginComponent,
     ProfileComponent,
     ConfirmationDialogComponent,
-    PropertiesComponent
+    PropertiesComponent,
+    ReadPropertyDetailDialogComponent
   ],
   imports: [
     BrowserModule,

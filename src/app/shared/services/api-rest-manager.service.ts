@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Property } from '../models/propery.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +57,15 @@ export class ApiRestManagerService {
     const username = this.auth.getCurrentUsername();
     const url = `${this.baseurl}users/${username}`;
     return this.http.delete(url, { observe: 'response' });
+  }
+
+  getUserProperties(): Observable<Property[]> {
+    const url = `${this.baseurl}users/${this.auth.getCurrentUsername()}/properties`;
+    return this.http.get<Property[]>(url);
+  }
+
+  getProperty(property_id: string): Observable<Property> {
+    const url = `${this.baseurl}properties/${property_id}`;
+    return this.http.get<Property>(url);
   }
 }
