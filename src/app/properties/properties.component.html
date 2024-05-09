@@ -20,6 +20,16 @@
           <mat-cell *matCellDef="let property"> {{property.cadastralReference}} </mat-cell>
         </ng-container>
 
+        <!-- Tipo -->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef> Tipo</mat-header-cell>
+          <mat-cell *matCellDef="let property">
+            <span *ngIf="property.houseDetails">Casa</span>
+            <span *ngIf="property.flatDetails">Piso</span>
+            <span *ngIf="property.garageDetails">Garaje</span>
+          </mat-cell>
+        </ng-container>
+
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
@@ -40,8 +50,9 @@
           </mat-cell>
         </ng-container>
         <mat-header-row
-          *matHeaderRowDef="['propertyName', 'address', 'cadastralReference', 'actions']"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: ['propertyName', 'address', 'cadastralReference', 'actions']"></mat-row>
+          *matHeaderRowDef="['propertyName', 'address', 'cadastralReference', 'type', 'actions']"></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: ['propertyName', 'address', 'cadastralReference', 'type', 'actions']"></mat-row>
       </mat-table>
     </mat-card-content>
   </mat-card>

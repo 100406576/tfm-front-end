@@ -7,7 +7,7 @@ export class Property {
     houseDetails?: House;
     flatDetails?: Flat;
     garageDetails?: Garage;
-
+    
     constructor() {
         this.property_id = '';
         this.propertyName = '';

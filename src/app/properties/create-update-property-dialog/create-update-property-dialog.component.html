@@ -1,0 +1,86 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+    <form #propertyForm="ngForm">
+        <mat-form-field class="full-width">
+            <mat-label>Nombre de la propiedad</mat-label>
+            <input [(ngModel)]="property.propertyName" name="propertyName" id="propertyName" #propertyName="ngModel" matInput required type="text" />
+            <mat-error *ngIf="propertyName.errors?.['required'] && (propertyName.dirty || propertyName.touched)">
+                El nombre de la propiedad es obligatorio
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Dirección</mat-label>
+            <input [(ngModel)]="property.address" name="address" id="address" #address="ngModel" matInput required type="text" />
+            <mat-error *ngIf="address.errors?.['required'] && (address.dirty || address.touched)">
+                La dirección es obligatoria
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Referencia catastral</mat-label>
+            <input [(ngModel)]="property.cadastralReference" name="cadastralReference" id="cadastralReference" #cadastralReference="ngModel" matInput required type="text" />
+            <mat-error *ngIf="cadastralReference.errors?.['required'] && (cadastralReference.dirty || cadastralReference.touched)">
+                La referencia catastral es obligatoria
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Tipo de propiedad</mat-label>
+            <mat-select [(ngModel)]="propertyType" name="propertyType" id="propertyType" [disabled]="!isCreate()">
+                <mat-option value="house">Casa</mat-option>
+                <mat-option value="flat">Piso</mat-option>
+                <mat-option value="garage">Garaje</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- House Details -->
+        <ng-container *ngIf="propertyType === 'house'">
+            <mat-form-field class="full-width">
+                <mat-label>Número de habitaciones</mat-label>
+                <input [(ngModel)]="houseDetails.numberOfRooms" name="numberOfRoomsHouse" id="numberOfRoomsHouse" #numberOfRoomsHouse="ngModel" matInput required type="number" min="0"/>
+                <mat-error *ngIf="numberOfRoomsHouse.errors?.['required'] && (numberOfRoomsHouse.dirty || numberOfRoomsHouse.touched)">
+                    El número de habitaciones es obligatorio
+                </mat-error>
+            </mat-form-field>
+            <mat-slide-toggle [(ngModel)]="houseDetails.hasGarden" name="hasGardenHouse" id="hasGardenHouse" #hasGardenHouse="ngModel">Tiene jardín</mat-slide-toggle>
+        </ng-container>
+
+        <!-- Flat Details -->
+        <ng-container *ngIf="propertyType === 'flat'">
+            <mat-form-field class="full-width">
+                <mat-label>Número de habitaciones</mat-label>
+                <input [(ngModel)]="flatDetails.numberOfRooms" name="numberOfRoomsFlat" id="numberOfRoomsFlat" #numberOfRoomsFlat="ngModel" matInput required type="number" min="0"/>
+                <mat-error *ngIf="numberOfRoomsFlat.errors?.['required'] && (numberOfRoomsFlat.dirty || numberOfRoomsFlat.touched)">
+                    El número de habitaciones es obligatorio
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Número de planta</mat-label>
+                <input [(ngModel)]="flatDetails.floorNumber" name="floorNumberFlat" id="floorNumberFlat" #floorNumberFlat="ngModel" matInput required type="number" min="0"/>
+                <mat-error *ngIf="floorNumberFlat.errors?.['required'] && (floorNumberFlat.dirty || floorNumberFlat.touched)">
+                    El número de planta es obligatorio
+                </mat-error>
+            </mat-form-field>
+            <mat-slide-toggle [(ngModel)]="flatDetails.hasBalcony" name="hasBalconyFlat" id="hasBalconyFlat" #hasBalconyFlat="ngModel">Tiene balcón</mat-slide-toggle>
+        </ng-container>
+
+        <!-- Garage Details -->
+        <ng-container *ngIf="propertyType === 'garage'">
+            <mat-form-field class="full-width">
+                <mat-label>Capacidad</mat-label>
+                <input [(ngModel)]="garageDetails.capacity" name="capacityGarage" id="capacityGarage" #capacityGarage="ngModel" matInput required type="number" min="0"/>
+                <mat-error *ngIf="capacityGarage.errors?.['required'] && (capacityGarage.dirty || capacityGarage.touched)">
+                    La capacidad es obligatoria
+                </mat-error>
+            </mat-form-field>
+            <mat-slide-toggle [(ngModel)]="garageDetails.isPrivate" name="isPrivateGarage" id="isPrivateGarage" #isPrivateGarage="ngModel">Es privado</mat-slide-toggle>
+        </ng-container>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-center">
+    <button cdkFocusInitial mat-dialog-close mat-raised-button mat-button class="btn btn-danger mx-1">Close</button>
+    <button (click)="create()" *ngIf="isCreate()" mat-button class="btn btn-primary mx-1" [mat-dialog-close]="true"
+        cdkFocusInitial [disabled]="!propertyForm.valid">Crear
+    </button>
+    <button (click)="update()" *ngIf="!isCreate()" color="primary" mat-button class="btn btn-primary mx-1"
+        [mat-dialog-close]="true" cdkFocusInitial [disabled]="!propertyForm.valid">Actualizar
+    </button>
+</mat-dialog-actions>

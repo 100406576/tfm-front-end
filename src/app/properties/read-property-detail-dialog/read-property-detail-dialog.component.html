@@ -5,7 +5,7 @@
       <strong>{{keyMap[key] || key}}: </strong>{{property[key]}}
     </div>
     <div *ngIf="getDetailsType(property) as detailsType">
-      <h4 class="mt-3">{{keyMap[detailsType] || detailsType}}</h4>
+      <h5 class="mt-3">{{keyMap[detailsType] || detailsType}}</h5>
       <div *ngFor="let key of labels(property[detailsType])">
         <strong>{{keyMap[key] || key}}: </strong>{{property[detailsType][key]}}
       </div>

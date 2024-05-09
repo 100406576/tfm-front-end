@@ -3,8 +3,8 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-read-detail',
-  templateUrl: './read-property-detail.component.html',
-  styleUrls: ['./read-property-detail.component.css']
+  templateUrl: './read-property-detail-dialog.component.html',
+  styleUrls: ['./read-property-detail-dialog.component.css']
 })
 
 export class ReadPropertyDetailDialogComponent {
@@ -22,7 +22,8 @@ export class ReadPropertyDetailDialogComponent {
     'isPrivate': 'Es privado',
     'flatDetails': 'Detalles del piso',
     'houseDetails': 'Detalles de la casa',
-    'garageDetails': 'Detalles del garaje'
+    'garageDetails': 'Detalles del garaje',
+    'type': 'Tipo'
   };
 
   labels(data: any): string[] {

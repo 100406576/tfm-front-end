@@ -4,7 +4,7 @@ import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Property } from '../models/propery.model';
+import { Property } from '../models/property.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +67,16 @@ export class ApiRestManagerService {
   getProperty(property_id: string): Observable<Property> {
     const url = `${this.baseurl}properties/${property_id}`;
     return this.http.get<Property>(url);
+  }
+
+  createProperty(property: Property) {
+    const url = `${this.baseurl}users/${this.auth.getCurrentUsername()}/properties`;
+    return this.http.post(url, property, { observe: 'response', headers: { 'Content-Type': 'application/json' } });
+  }
+
+  updateProperty(property_id: string, property: Property) {
+    const url = `${this.baseurl}properties/${property_id}`;
+    return this.http.put(url, property, { observe: 'response', headers: { 'Content-Type': 'application/json' } });
   }
 
   deleteProperty(property_id: string) {

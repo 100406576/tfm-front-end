@@ -17,9 +17,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { PropertiesComponent } from './properties/properties.component';
-import { ReadPropertyDetailDialogComponent } from './properties/read-property-detail/read-property-detail.component';
+import { ReadPropertyDetailDialogComponent } from './properties/read-property-detail-dialog/read-property-detail-dialog.component';
+import { CreateUpdatePropertyDialogComponent } from './properties/create-update-property-dialog/create-update-property-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,8 @@ import { ReadPropertyDetailDialogComponent } from './properties/read-property-de
     ProfileComponent,
     ConfirmationDialogComponent,
     PropertiesComponent,
-    ReadPropertyDetailDialogComponent
+    ReadPropertyDetailDialogComponent,
+    CreateUpdatePropertyDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +48,10 @@ import { ReadPropertyDetailDialogComponent } from './properties/read-property-de
     MatCardModule,
     MatTableModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     ToastrModule.forRoot(),
   ],
   providers: [
