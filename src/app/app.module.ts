@@ -25,6 +25,8 @@ import { ConfirmationDialogComponent } from './shared/components/confirmation-di
 import { PropertiesComponent } from './properties/properties.component';
 import { ReadPropertyDetailDialogComponent } from './properties/read-property-detail-dialog/read-property-detail-dialog.component';
 import { CreateUpdatePropertyDialogComponent } from './properties/create-update-property-dialog/create-update-property-dialog.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { GeocodingService } from './shared/services/geocoding.service';
 
 @NgModule({
   declarations: [
@@ -53,10 +55,12 @@ import { CreateUpdatePropertyDialogComponent } from './properties/create-update-
     MatSelectModule,
     MatSlideToggleModule,
     ToastrModule.forRoot(),
+    GoogleMapsModule
   ],
   providers: [
     ApiRestManagerService,
     AuthService,
+    GeocodingService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
