@@ -1,0 +1,10 @@
+{
+    "/maps": {
+      "target": "https://maps.google.com",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/maps": "/maps"
+      }
+    }
+  }

@@ -8,58 +8,65 @@ import { ConfirmationDialogComponent } from '../shared/components/confirmation-d
 import { ToastrService } from 'ngx-toastr';
 import { CreateUpdatePropertyDialogComponent } from './create-update-property-dialog/create-update-property-dialog.component';
 import { GoogleMap } from '@angular/google-maps';
+import { GeocodingService } from '../shared/services/geocoding.service';
 
 @Component({
   selector: 'app-properties',
   templateUrl: './properties.component.html',
   styleUrls: ['./properties.component.css']
 })
-export class PropertiesComponent{
+export class PropertiesComponent {
   properties!: Observable<Property[]>;
-  markerFuenlabrada = { position: { lat: 40.2839, lng: -3.7942 } };
-  markerLeganes = { position: { lat: 40.3315, lng: -3.7686 } };
-  markerAtocha = { position: { lat: 40.4072, lng: -3.6896 } };
-  
-  markers = [this.markerFuenlabrada, this.markerLeganes, this.markerAtocha];
+  markers: {
+    position: {
+      lat: number;
+      lng: number;
+    };
+  }[] = [];
 
 
-@ViewChild(GoogleMap) map!: GoogleMap;
+  @ViewChild(GoogleMap) map!: GoogleMap;
 
-ngAfterViewInit(){
-  const bounds = this.getBounds(this.markers);
-  if (this.map?.googleMap) {
-    this.map.googleMap.fitBounds(bounds);
+  ngAfterViewInit() {
+    const bounds = this.getBounds(this.markers);
+    if (this.map?.googleMap) {
+      this.map.googleMap.fitBounds(bounds);
+    }
   }
-}
-
-getBounds(markers: any){
-  let north;
-  let south;
-  let east;
-  let west;
-
-  for (const marker of markers){
-    north = north !== undefined ? Math.max(north, marker.position.lat) : marker.position.lat;
-    south = south !== undefined ? Math.min(south, marker.position.lat) : marker.position.lat;
-    east = east !== undefined ? Math.max(east, marker.position.lng) : marker.position.lng;
-    west = west !== undefined ? Math.min(west, marker.position.lng) : marker.position.lng;
-  };
-
-  const bounds = { north, south, east, west };
-
-  return bounds;
-}
 
   constructor(private apiManager: ApiRestManagerService,
     private dialog: MatDialog,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private geocodingService: GeocodingService) {
     this.loadProperties();
-  }
+    this.loadMarkers();
+  };
 
   loadProperties(): void {
     this.properties = this.apiManager.getUserProperties();
   }
-  
+
+  loadMarkers(): void {
+    this.properties.forEach(property => {
+      property.forEach(property => {
+        this.geocodingService.getLocation(property.address).subscribe(response => {
+          if (response.status === 'OK' && response.results.length > 0) {
+            const location = response.results[0].geometry.location;
+            const lat = typeof location.lat === 'function' ? location.lat() : location.lat;
+            const lng = typeof location.lng === 'function' ? location.lng() : location.lng;
+            //onsole.log(`Latitud: ${lat}, Longitud: ${lng}`);
+            const newMarker = { position: { lat: lat as number, lng: lng as number } };
+            // Add the new marker to the markers list
+            this.markers.push(newMarker);
+            this.ngAfterViewInit();
+          } else {
+            console.error('No se pudo obtener la ubicación para la dirección proporcionada.');
+          }
+        });
+      });
+    });
+  }
+
   onRead(property: any) {
     this.apiManager.getProperty(property.property_id).subscribe((property) => {
       this.dialog.open(ReadPropertyDetailDialogComponent, {
@@ -108,5 +115,23 @@ getBounds(markers: any){
         });
       }
     });
+  }
+
+  getBounds(markers: any) {
+    let north;
+    let south;
+    let east;
+    let west;
+
+    for (const marker of markers) {
+      north = north !== undefined ? Math.max(north, marker.position.lat) : marker.position.lat;
+      south = south !== undefined ? Math.min(south, marker.position.lat) : marker.position.lat;
+      east = east !== undefined ? Math.max(east, marker.position.lng) : marker.position.lng;
+      west = west !== undefined ? Math.min(west, marker.position.lng) : marker.position.lng;
+    };
+
+    const bounds = { north, south, east, west };
+
+    return bounds;
   }
 }
