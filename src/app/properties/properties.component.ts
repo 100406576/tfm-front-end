@@ -28,10 +28,7 @@ export class PropertiesComponent {
   @ViewChild(GoogleMap) map!: GoogleMap;
 
   ngAfterViewInit() {
-    const bounds = this.getBounds(this.markers);
-    if (this.map?.googleMap) {
-      this.map.googleMap.fitBounds(bounds);
-    }
+    this.fitMapBounds();
   }
 
   constructor(private apiManager: ApiRestManagerService,
@@ -39,30 +36,30 @@ export class PropertiesComponent {
     private toastr: ToastrService,
     private geocodingService: GeocodingService) {
     this.loadProperties();
-    this.loadMarkers();
   };
 
   loadProperties(): void {
     this.properties = this.apiManager.getUserProperties();
+    this.properties.subscribe(properties => {
+      this.loadMarkers(properties);
+    });
   }
 
-  loadMarkers(): void {
-    this.properties.forEach(property => {
-      property.forEach(property => {
-        this.geocodingService.getLocation(property.address).subscribe(response => {
-          if (response.status === 'OK' && response.results.length > 0) {
-            const location = response.results[0].geometry.location;
-            const lat = typeof location.lat === 'function' ? location.lat() : location.lat;
-            const lng = typeof location.lng === 'function' ? location.lng() : location.lng;
-            //onsole.log(`Latitud: ${lat}, Longitud: ${lng}`);
-            const newMarker = { position: { lat: lat as number, lng: lng as number } };
-            // Add the new marker to the markers list
-            this.markers.push(newMarker);
-            this.ngAfterViewInit();
-          } else {
-            console.error('No se pudo obtener la ubicación para la dirección proporcionada.');
-          }
-        });
+  loadMarkers(properties: Property[]): void {
+    this.markers = [];
+    properties.forEach(property => {
+      this.geocodingService.getLocation(property.address).subscribe(response => {
+        if (response.status === 'OK' && response.results.length > 0) {
+          const location = response.results[0].geometry.location;
+          const lat = typeof location.lat === 'function' ? location.lat() : location.lat;
+          const lng = typeof location.lng === 'function' ? location.lng() : location.lng;
+          //console.log(`Latitud: ${lat}, Longitud: ${lng}`);
+          const newMarker = { position: { lat: lat as number, lng: lng as number } };
+          this.markers.push(newMarker);
+          this.fitMapBounds();
+        } else {
+          console.error('No se pudo obtener la ubicación para la dirección proporcionada.');
+        }
       });
     });
   }
@@ -115,6 +112,13 @@ export class PropertiesComponent {
         });
       }
     });
+  }
+
+  fitMapBounds() {
+    const bounds = this.getBounds(this.markers);
+    if (this.map?.googleMap) {
+      this.map.googleMap.fitBounds(bounds);
+    }
   }
 
   getBounds(markers: any) {
