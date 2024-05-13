@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './shared/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,17 @@ export class AppComponent implements OnInit {
     this.auth.getAuthStatus().subscribe(status => {
       this.isLoggedIn = status;
     });
+    this.loadScript(`https://maps.googleapis.com/maps/api/js?key=${environment.googleApiKey}`);
+  }
+
+  loadScript(url: string) {
+    const body = <HTMLDivElement> document.body;
+    const script = document.createElement('script');
+    script.innerHTML = '';
+    script.src = url;
+    script.async = false;
+    script.defer = true;
+    body.appendChild(script);
   }
 
   logOut() {
