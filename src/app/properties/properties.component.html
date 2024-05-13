@@ -38,7 +38,7 @@
             </button>
           </mat-header-cell>
           <mat-cell *matCellDef="let property">
-            <button class="action-button" (click)="onRead(property)" mat-button mat-icon-button matSuffix>
+            <button class="action-button" (click)="onRead(property.property_id)" mat-button mat-icon-button matSuffix>
               <mat-icon>visibility</mat-icon>
             </button>
             <button class="action-button" (click)="onEdit(property)" mat-button mat-icon-button matSuffix>
@@ -59,8 +59,11 @@
 
   
   <div class="my-google-map">
-    <google-map [width]="null" [height]="null">
-      <map-marker *ngFor="let marker of markers" [position]="marker.position"></map-marker>
-    </google-map>
-  </div>
+  <google-map [width]="null" [height]="null">
+    <map-marker *ngFor="let marker of markers; let i = index" 
+                [position]="marker.position" 
+                (mapClick)="onRead(marker.property_id)">
+    </map-marker>
+  </google-map>
+</div>
 </section>

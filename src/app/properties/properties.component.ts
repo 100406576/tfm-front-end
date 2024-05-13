@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CreateUpdatePropertyDialogComponent } from './create-update-property-dialog/create-update-property-dialog.component';
 import { GoogleMap } from '@angular/google-maps';
 import { GeocodingService } from '../shared/services/geocoding.service';
+import { Marker } from '../shared/models/marker.model';
 
 @Component({
   selector: 'app-properties',
@@ -17,13 +18,7 @@ import { GeocodingService } from '../shared/services/geocoding.service';
 })
 export class PropertiesComponent {
   properties!: Observable<Property[]>;
-  markers: {
-    position: {
-      lat: number;
-      lng: number;
-    };
-  }[] = [];
-
+  markers: Marker[] = [];
 
   @ViewChild(GoogleMap) map!: GoogleMap;
 
@@ -54,7 +49,7 @@ export class PropertiesComponent {
           const lat = typeof location.lat === 'function' ? location.lat() : location.lat;
           const lng = typeof location.lng === 'function' ? location.lng() : location.lng;
           //console.log(`Latitud: ${lat}, Longitud: ${lng}`);
-          const newMarker = { position: { lat: lat as number, lng: lng as number } };
+          const newMarker = new Marker({ lat: lat as number, lng: lng as number }, property.property_id);
           this.markers.push(newMarker);
           this.fitMapBounds();
         } else {
@@ -64,8 +59,8 @@ export class PropertiesComponent {
     });
   }
 
-  onRead(property: any) {
-    this.apiManager.getProperty(property.property_id).subscribe((property) => {
+  onRead(property_id: string) {
+    this.apiManager.getProperty(property_id).subscribe((property) => {
       this.dialog.open(ReadPropertyDetailDialogComponent, {
         data: {
           object: property
@@ -80,7 +75,7 @@ export class PropertiesComponent {
     });
   }
 
-  onEdit(property: any) {
+  onEdit(property: Property) {
     this.dialog.open(CreateUpdatePropertyDialogComponent, {
       data: property
     }).afterClosed().subscribe(() => {
@@ -88,7 +83,7 @@ export class PropertiesComponent {
     });
   }
 
-  onDelete(property: any) {
+  onDelete(property: Property) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: 'Borrar propiedad', message: '¿Estás seguro de que deseas eliminar esta propiedad?' }
     });
@@ -121,21 +116,37 @@ export class PropertiesComponent {
     }
   }
 
-  getBounds(markers: any) {
-    let north;
-    let south;
-    let east;
-    let west;
-
-    for (const marker of markers) {
-      north = north !== undefined ? Math.max(north, marker.position.lat) : marker.position.lat;
-      south = south !== undefined ? Math.min(south, marker.position.lat) : marker.position.lat;
-      east = east !== undefined ? Math.max(east, marker.position.lng) : marker.position.lng;
-      west = west !== undefined ? Math.min(west, marker.position.lng) : marker.position.lng;
-    };
-
+  getBounds(markers: Marker[]) {
+    // Coordenadas que definen los límites de España
+    let north = 43.79;
+    let south = 36.00;
+    let east = 3.04;
+    let west = -9.29;
+  
+    if (markers.length > 0) {
+      north = markers[0].position.lat;
+      south = markers[0].position.lat;
+      east = markers[0].position.lng;
+      west = markers[0].position.lng;
+  
+      for (const marker of markers) {
+        north = Math.max(north, marker.position.lat);
+        south = Math.min(south, marker.position.lat);
+        east = Math.max(east, marker.position.lng);
+        west = Math.min(west, marker.position.lng);
+      };
+  
+      if (markers.length === 1) {
+        const margin = 0.007;
+        north += margin;
+        south -= margin;
+        east += margin;
+        west -= margin;
+      }
+    }
+  
     const bounds = { north, south, east, west };
-
+  
     return bounds;
   }
 }
