@@ -60,7 +60,7 @@ export class ApiRestManagerService {
   }
 
   getUserProperties(): Observable<Property[]> {
-    const url = `${this.baseurl}users/${this.auth.getCurrentUsername()}/properties`;
+    const url = `${this.baseurl}properties`;
     return this.http.get<Property[]>(url);
   }
 
@@ -70,7 +70,7 @@ export class ApiRestManagerService {
   }
 
   createProperty(property: Property) {
-    const url = `${this.baseurl}users/${this.auth.getCurrentUsername()}/properties`;
+    const url = `${this.baseurl}properties`;
     return this.http.post(url, property, { observe: 'response', headers: { 'Content-Type': 'application/json' } });
   }
 
