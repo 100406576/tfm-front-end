@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Property } from '../models/property.model';
+import { Operation } from '../models/opetation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -82,5 +83,10 @@ export class ApiRestManagerService {
   deleteProperty(property_id: string) {
     const url = `${this.baseurl}properties/${property_id}`;
     return this.http.delete(url, { observe: 'response' });
+  }
+
+  getPropertyOperations(property_id: string): Observable<Operation[]> {
+    const url = `${this.baseurl}operations/property/${property_id}`;
+    return this.http.get<Operation[]>(url);
   }
 }
