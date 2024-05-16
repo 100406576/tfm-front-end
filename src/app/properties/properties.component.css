@@ -1,12 +1,12 @@
 mat-card {
-    width: 50%;
+    width: 52%;
     height: 100%;
     float: left;
-    margin: 20px;
     display: flex;
+    margin-left: 20px;
     /* Chrome 10-25, Safari 5.1-6 */
     background: -webkit-linear-gradient(bottom right, rgba(142, 140, 132, 1), rgba(62, 63, 58, 1));
-    
+
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to bottom right, rgba(142, 140, 132, 1), rgba(62, 63, 58, 1));
     border-radius: .5rem;
@@ -18,13 +18,12 @@ mat-card {
 }
 
 
-.my-google-map{
-    .map-container{
-        width: 46%;
-        margin-top: 20px;
+.my-google-map {
+    .map-container {
+        width: 44%;
+        float: right;
         margin-right: 20px;
-      float: right;
-      height: 70vh;
-      border-radius: .5rem;
+        height: 70vh;
+        border-radius: .5rem;
     }
 }

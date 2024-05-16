@@ -1,69 +1,70 @@
 <section class="background">
-  <mat-card>
-    <mat-card-content>
-      <mat-table #table [dataSource]="(properties | async) ?? []" class="mat-elevation-z8">
-        <!-- Property Name Column -->
-        <ng-container matColumnDef="propertyName">
-          <mat-header-cell *matHeaderCellDef> Nombre de la propiedad </mat-header-cell>
-          <mat-cell *matCellDef="let property"> {{property.propertyName}} </mat-cell>
-        </ng-container>
+  <div class="py-5 h-100">
+    <mat-card class>
+      <mat-card-content>
+        <mat-table #table [dataSource]="(properties | async) ?? []" class="mat-elevation-z8">
+          <!-- Property Name Column -->
+          <ng-container matColumnDef="propertyName">
+            <mat-header-cell *matHeaderCellDef> Nombre de la propiedad </mat-header-cell>
+            <mat-cell *matCellDef="let property"> {{property.propertyName}} </mat-cell>
+          </ng-container>
 
-        <!-- Address Column -->
-        <ng-container matColumnDef="address">
-          <mat-header-cell *matHeaderCellDef> Dirección </mat-header-cell>
-          <mat-cell *matCellDef="let property"> {{property.address}} </mat-cell>
-        </ng-container>
+          <!-- Address Column -->
+          <ng-container matColumnDef="address">
+            <mat-header-cell *matHeaderCellDef> Dirección </mat-header-cell>
+            <mat-cell *matCellDef="let property"> {{property.address}} </mat-cell>
+          </ng-container>
 
-        <!-- Cadastral Reference-->
-        <ng-container matColumnDef="cadastralReference">
-          <mat-header-cell *matHeaderCellDef> Referencia Catastral </mat-header-cell>
-          <mat-cell *matCellDef="let property"> {{property.cadastralReference}} </mat-cell>
-        </ng-container>
+          <!-- Cadastral Reference-->
+          <ng-container matColumnDef="cadastralReference">
+            <mat-header-cell *matHeaderCellDef> Referencia Catastral </mat-header-cell>
+            <mat-cell *matCellDef="let property"> {{property.cadastralReference}} </mat-cell>
+          </ng-container>
 
-        <!-- Tipo -->
-        <ng-container matColumnDef="type">
-          <mat-header-cell *matHeaderCellDef> Tipo</mat-header-cell>
-          <mat-cell *matCellDef="let property">
-            <span *ngIf="property.houseDetails">Casa</span>
-            <span *ngIf="property.flatDetails">Piso</span>
-            <span *ngIf="property.garageDetails">Garaje</span>
-          </mat-cell>
-        </ng-container>
+          <!-- Tipo -->
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef> Tipo</mat-header-cell>
+            <mat-cell *matCellDef="let property">
+              <span *ngIf="property.houseDetails">Casa</span>
+              <span *ngIf="property.flatDetails">Piso</span>
+              <span *ngIf="property.garageDetails">Garaje</span>
+            </mat-cell>
+          </ng-container>
 
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef>
-            <button class="action-button" (click)="onCreate()" mat-button mat-icon-button matSuffix>
-              <mat-icon color="warn">add</mat-icon>
-            </button>
-          </mat-header-cell>
-          <mat-cell *matCellDef="let property">
-            <button class="action-button" (click)="onRead(property.property_id)" mat-button mat-icon-button matSuffix>
-              <mat-icon>visibility</mat-icon>
-            </button>
-            <button class="action-button" (click)="onEdit(property)" mat-button mat-icon-button matSuffix>
-              <mat-icon color="warn">mode_edit</mat-icon>
-            </button>
-            <button class="action-button" (click)="onDelete(property)" mat-button mat-icon-button matSuffix>
-              <mat-icon color="warn">close</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-        <mat-header-row
-          *matHeaderRowDef="['propertyName', 'address', 'cadastralReference', 'type', 'actions']"></mat-header-row>
-        <mat-row
-          *matRowDef="let row; columns: ['propertyName', 'address', 'cadastralReference', 'type', 'actions']"></mat-row>
-      </mat-table>
-    </mat-card-content>
-  </mat-card>
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>
+              <button class="action-button" (click)="onCreate()" mat-button mat-icon-button matSuffix>
+                <mat-icon color="warn">add</mat-icon>
+              </button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let property">
+              <button class="action-button" (click)="onRead(property.property_id)" mat-button mat-icon-button matSuffix>
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button class="action-button" (click)="onEdit(property)" mat-button mat-icon-button matSuffix>
+                <mat-icon color="warn">mode_edit</mat-icon>
+              </button>
+              <button class="action-button" (click)="onDelete(property)" mat-button mat-icon-button matSuffix>
+                <mat-icon color="warn">close</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="['propertyName', 'address', 'cadastralReference', 'type', 'actions']"></mat-header-row>
+          <mat-row
+            *matRowDef="let row; columns: ['propertyName', 'address', 'cadastralReference', 'type', 'actions']"></mat-row>
+        </mat-table>
+      </mat-card-content>
+    </mat-card>
 
-  
-  <div class="my-google-map">
-  <google-map [width]="null" [height]="null">
-    <map-marker *ngFor="let marker of markers; let i = index" 
-                [position]="marker.position" 
-                (mapClick)="onRead(marker.property_id)">
-    </map-marker>
-  </google-map>
-</div>
+
+    <div class="my-google-map">
+      <google-map [width]="null" [height]="null">
+        <map-marker *ngFor="let marker of markers; let i = index" [position]="marker.position"
+          (mapClick)="onRead(marker.property_id)">
+        </map-marker>
+      </google-map>
+    </div>
+  </div>
 </section>

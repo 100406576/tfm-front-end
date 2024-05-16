@@ -1,65 +1,71 @@
 <section class="background">
-    <div class=pt-3>
-    <select [(ngModel)]="selectedProperty_id" (change)="onPropertyChange(selectedProperty_id)" class="selectProperty">
-        <option value="" disabled selected>Selecciona una propiedad</option>
-        <option *ngFor="let property of properties" [value]="property.property_id">{{property.propertyName}}</option>
-    </select>
+    <div class="py-5 h-100">
+        <select [(ngModel)]="selectedProperty_id" (change)="onPropertyChange(selectedProperty_id)"
+            class="selectProperty">
+            <option value="" disabled selected>Selecciona una propiedad</option>
+            <option *ngFor="let property of properties" [value]="property.property_id">{{property.propertyName}}
+            </option>
+        </select>
+        <div *ngIf="selectedProperty_id" class="d-flex justify-content-center mt-4 mb-4">
+            <button mat-button class="btn btn-success mx-2" (click)="onAddIncome()">
+                Añadir ingreso
+                <img src="../../assets/images/income.png" alt="Descripción de la imagen"
+                    style="height: 35px; width: 40px;">
+            </button>
+            <button mat-button class="btn btn-danger mx-2" (click)="onAddExpense()">
+                Añadir gasto
+                <img src="../../assets/images/expense.png" alt="Descripción de la imagen"
+                    style="height: 35px; width: 40px;">
+            </button>
+        </div>
+        <mat-card *ngIf="selectedProperty_id">
+            <mat-card-content>
+                <mat-table #table [dataSource]="operations" class="mat-elevation-z8">
+                    <!-- Operation Type Column -->
+                    <ng-container matColumnDef="type">
+                        <mat-header-cell *matHeaderCellDef> Tipo de operación </mat-header-cell>
+                        <mat-cell *matCellDef="let operation"> {{operation.type}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Description Column -->
+                    <ng-container matColumnDef="description">
+                        <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+                        <mat-cell *matCellDef="let operation"> {{operation.description}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Date Column -->
+                    <ng-container matColumnDef="date">
+                        <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+                        <mat-cell *matCellDef="let operation"> {{operation.date | date}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Value Column -->
+                    <ng-container matColumnDef="value">
+                        <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+                        <mat-cell *matCellDef="let operation"> {{operation.value}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                        <mat-cell *matCellDef="let operation">
+                            <button class="action-button" (click)="onEditOperation(operation)" mat-button
+                                mat-icon-button matSuffix>
+                                <mat-icon color="warn">mode_edit</mat-icon>
+                            </button>
+                            <button class="action-button" (click)="onDeleteOperation(operation)" mat-button
+                                mat-icon-button matSuffix>
+                                <mat-icon color="warn">close</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row
+                        *matHeaderRowDef="['type', 'description', 'date', 'value', 'actions']"></mat-header-row>
+                    <mat-row
+                        *matRowDef="let row; columns: ['type', 'description', 'date', 'value', 'actions']"></mat-row>
+                </mat-table>
+            </mat-card-content>
+        </mat-card>
     </div>
-    <div *ngIf="selectedProperty_id" class="d-flex justify-content-center mb-4">
-        <button mat-button class="btn btn-success mx-2" (click)="onAddIncome()">
-            Añadir ingreso 
-            <img src="../../assets/images/income.png" alt="Descripción de la imagen" style="height: 35px; width: 40px;">
-        </button>
-        <button mat-button class="btn btn-danger mx-2" (click)="onAddExpense()">
-            Añadir gasto 
-            <img src="../../assets/images/expense.png" alt="Descripción de la imagen" style="height: 35px; width: 40px;">
-        </button>
-    </div>
-    <mat-card *ngIf="selectedProperty_id">
-        <mat-card-content>
-            <mat-table #table [dataSource]="operations" class="mat-elevation-z8">
-                <!-- Operation Type Column -->
-                <ng-container matColumnDef="type">
-                    <mat-header-cell *matHeaderCellDef> Tipo de operación </mat-header-cell>
-                    <mat-cell *matCellDef="let operation"> {{operation.type}} </mat-cell>
-                </ng-container>
-
-                <!-- Description Column -->
-                <ng-container matColumnDef="description">
-                    <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
-                    <mat-cell *matCellDef="let operation"> {{operation.description}} </mat-cell>
-                </ng-container>
-
-                <!-- Date Column -->
-                <ng-container matColumnDef="date">
-                    <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
-                    <mat-cell *matCellDef="let operation"> {{operation.date | date}} </mat-cell>
-                </ng-container>
-
-                <!-- Value Column -->
-                <ng-container matColumnDef="value">
-                    <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
-                    <mat-cell *matCellDef="let operation"> {{operation.value}} </mat-cell>
-                </ng-container>
-
-                <!-- Actions Column -->
-                <ng-container matColumnDef="actions">
-                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                    <mat-cell *matCellDef="let operation">
-                        <button class="action-button" (click)="onEditOperation(operation)" mat-button mat-icon-button
-                            matSuffix>
-                            <mat-icon color="warn">mode_edit</mat-icon>
-                        </button>
-                        <button class="action-button" (click)="onDeleteOperation(operation)" mat-button mat-icon-button
-                            matSuffix>
-                            <mat-icon color="warn">close</mat-icon>
-                        </button>
-                    </mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="['type', 'description', 'date', 'value', 'actions']"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: ['type', 'description', 'date', 'value', 'actions']"></mat-row>
-            </mat-table>
-        </mat-card-content>
-    </mat-card>
 </section>
