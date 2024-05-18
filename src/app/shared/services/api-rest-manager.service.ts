@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Property } from '../models/property.model';
-import { Operation } from '../models/opetation.model';
+import { Operation } from '../models/operation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -88,5 +88,10 @@ export class ApiRestManagerService {
   getPropertyOperations(property_id: string): Observable<Operation[]> {
     const url = `${this.baseurl}operations/property/${property_id}`;
     return this.http.get<Operation[]>(url);
+  }
+
+  createOperation(operation: Operation) {
+    const url = `${this.baseurl}operations`;
+    return this.http.post(url, operation, { observe: 'response', headers: { 'Content-Type': 'application/json' } });
   }
 }

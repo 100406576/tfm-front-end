@@ -21,11 +21,6 @@
         <mat-card *ngIf="selectedProperty_id">
             <mat-card-content>
                 <mat-table #table [dataSource]="operations" class="mat-elevation-z8">
-                    <!-- Operation Type Column -->
-                    <ng-container matColumnDef="type">
-                        <mat-header-cell *matHeaderCellDef> Tipo de operación </mat-header-cell>
-                        <mat-cell *matCellDef="let operation"> {{operation.type}} </mat-cell>
-                    </ng-container>
 
                     <!-- Description Column -->
                     <ng-container matColumnDef="description">
@@ -39,9 +34,21 @@
                         <mat-cell *matCellDef="let operation"> {{operation.date | date}} </mat-cell>
                     </ng-container>
 
+                    <!-- Operation Type Column -->
+                    <ng-container matColumnDef="type">
+                        <mat-header-cell *matHeaderCellDef> Tipo de operación </mat-header-cell>
+                        <mat-cell *matCellDef="let operation">
+                            <ng-container [ngSwitch]="operation.type">
+                                <span *ngSwitchCase="'income'">Ingreso</span>
+                                <span *ngSwitchCase="'expense'">Gasto</span>
+                                <span *ngSwitchDefault>{{operation.type}}</span>
+                            </ng-container>
+                        </mat-cell>
+                    </ng-container>
+
                     <!-- Value Column -->
                     <ng-container matColumnDef="value">
-                        <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef> Valor (€)</mat-header-cell>
                         <mat-cell *matCellDef="let operation"> {{operation.value}} </mat-cell>
                     </ng-container>
 
@@ -61,9 +68,9 @@
                     </ng-container>
 
                     <mat-header-row
-                        *matHeaderRowDef="['type', 'description', 'date', 'value', 'actions']"></mat-header-row>
+                        *matHeaderRowDef="['description', 'date', 'type', 'value', 'actions']"></mat-header-row>
                     <mat-row
-                        *matRowDef="let row; columns: ['type', 'description', 'date', 'value', 'actions']"></mat-row>
+                        *matRowDef="let row; columns: ['description', 'date', 'type', 'value', 'actions']"></mat-row>
                 </mat-table>
             </mat-card-content>
         </mat-card>

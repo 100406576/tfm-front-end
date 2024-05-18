@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { Flat, Garage, House, Property } from 'src/app/shared/models/property.model';
@@ -11,9 +10,6 @@ import { ApiRestManagerService } from 'src/app/shared/services/api-rest-manager.
   styleUrls: ['./create-update-property-dialog.component.css']
 })
 export class CreateUpdatePropertyDialogComponent {
-submit(_t7: NgForm) {
-alert('Form submitted');
-}
   title: string;
   property: Property;
   propertyType: 'house' | 'flat' | 'garage';

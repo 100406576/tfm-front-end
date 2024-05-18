@@ -28,6 +28,7 @@ import { CreateUpdatePropertyDialogComponent } from './properties/create-update-
 import { GoogleMapsModule } from '@angular/google-maps';
 import { GeocodingService } from './shared/services/geocoding.service';
 import { OperationsComponent } from './operations/operations.component';
+import { CreateUpdateOperationDialogComponent } from './operations/create-update-operation-dialog/create-update-operation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { OperationsComponent } from './operations/operations.component';
     PropertiesComponent,
     ReadPropertyDetailDialogComponent,
     CreateUpdatePropertyDialogComponent,
-    OperationsComponent
+    OperationsComponent,
+    CreateUpdateOperationDialogComponent
   ],
   imports: [
     BrowserModule,

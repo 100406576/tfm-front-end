@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+    <form #operationForm="ngForm">
+        <mat-form-field class="full-width">
+            <mat-label>Descripción</mat-label>
+            <input [(ngModel)]="operation.description" name="description" id="description" #description="ngModel" matInput required
+                type="text" />
+                <mat-error *ngIf="description.errors?.['required'] && (description.dirty || description.touched)">
+                    La descripción es obligatoria
+                </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Fecha</mat-label>
+            <input [(ngModel)]="date" name="date" id="date" matInput required type="date" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Tipo de operación</mat-label>
+            <mat-select [(ngModel)]="operation.type" name="type" id="type" required>
+                <mat-option value="income">Ingreso</mat-option>
+                <mat-option value="expense">Gasto</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <mat-label>Valor</mat-label>
+            <input [(ngModel)]="operation.value" name="value" id="value" #value="ngModel" matInput required type="number"
+                [min]="operation.type === 'income' ? 0 : null"
+                [max]="operation.type === 'expense' ? 0 : null"
+                placeholder="{{operation.type === 'income' ? 'Ingrese un valor positivo' : 'Ingrese un valor negativo'}}"
+            />
+            <mat-error *ngIf="value.errors?.['required'] && (value.dirty || value.touched)">
+                El valor es obligatorio
+            </mat-error>
+            <mat-error *ngIf="value.errors?.['min'] && (value.dirty || value.touched)">
+                La operación es un ingreso y debe ser positivo
+            </mat-error>
+            <mat-error *ngIf="value.errors?.['max'] && (value.dirty || value.touched)">
+                La operación es un gasto y debe ser negativo
+            </mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-center">
+    <button cdkFocusInitial mat-dialog-close mat-raised-button mat-button class="btn btn-danger mx-1">Close</button>
+    <button (click)="create()" *ngIf="isCreate()" mat-button class="btn btn-primary mx-1" [mat-dialog-close]="true"
+        cdkFocusInitial [disabled]="!operationForm.valid">Crear
+    </button>
+    <button (click)="update()" *ngIf="!isCreate()" color="primary" mat-button class="btn btn-primary mx-1"
+        [mat-dialog-close]="true" cdkFocusInitial [disabled]="!operationForm.valid">Actualizar
+    </button>
+</mat-dialog-actions>
