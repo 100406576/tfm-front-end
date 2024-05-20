@@ -1,4 +1,5 @@
 export class Operation {
+    operation_id?: string;
     description: string;
     date: Date;
     type: 'income' | 'expense';

@@ -4,6 +4,8 @@ import { Operation } from '../shared/models/operation.model';
 import { ApiRestManagerService } from '../shared/services/api-rest-manager.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateUpdateOperationDialogComponent } from './create-update-operation-dialog/create-update-operation-dialog.component';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationDialogComponent } from '../shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-operations',
@@ -16,8 +18,9 @@ export class OperationsComponent {
   selectedProperty_id: string = '';
   operations!: Operation[];
 
-  constructor(private apiManager: ApiRestManagerService,
-    private dialog: MatDialog,
+  constructor(public apiManager: ApiRestManagerService,
+    public dialog: MatDialog,
+    public toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -61,7 +64,29 @@ export class OperationsComponent {
     });
   }
 
-  onDeleteOperation(_t129: any) {
-    alert('Method not implemented.');
+  onDeleteOperation(operation: Operation) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: 'Borrar operación', message: '¿Estás seguro de que deseas eliminar esta operación?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && operation.operation_id) {
+        this.apiManager.deleteOperation(operation.operation_id).subscribe({
+          next: (response) => {
+            this.onPropertyChange(this.selectedProperty_id);
+            this.toastr.success('Operación borrada correctamente', 'Borrado', {
+              timeOut: 3000,
+              positionClass: 'toast-bottom-right',
+            });
+          },
+          error: (error) => {
+            this.toastr.error('No se ha podido borrar la operación', 'Borrado', {
+              timeOut: 3000,
+              positionClass: 'toast-bottom-right',
+            });
+          }
+        });
+      }
+    });
   }
 }

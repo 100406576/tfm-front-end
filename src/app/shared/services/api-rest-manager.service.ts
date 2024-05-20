@@ -94,4 +94,9 @@ export class ApiRestManagerService {
     const url = `${this.baseurl}operations`;
     return this.http.post(url, operation, { observe: 'response', headers: { 'Content-Type': 'application/json' } });
   }
+
+  deleteOperation(operation_id: string) {
+    const url = `${this.baseurl}operations/${operation_id}`;
+    return this.http.delete(url, { observe: 'response' });
+  }
 }
