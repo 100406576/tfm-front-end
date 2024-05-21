@@ -56,11 +56,11 @@
                     <ng-container matColumnDef="actions">
                         <mat-header-cell *matHeaderCellDef></mat-header-cell>
                         <mat-cell *matCellDef="let operation">
-                            <button class="action-button" (click)="onEditOperation(operation)" mat-button
+                            <button class="action-button" (click)="onEdit(operation)" mat-button
                                 mat-icon-button matSuffix>
                                 <mat-icon color="warn">mode_edit</mat-icon>
                             </button>
-                            <button class="action-button" (click)="onDeleteOperation(operation)" mat-button
+                            <button class="action-button" (click)="onDelete(operation)" mat-button
                                 mat-icon-button matSuffix>
                                 <mat-icon color="warn">close</mat-icon>
                             </button>

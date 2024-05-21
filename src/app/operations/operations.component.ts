@@ -54,7 +54,7 @@ export class OperationsComponent {
     });
   }
   
-  onEditOperation(operation: Operation) {
+  onEdit(operation: Operation) {
     this.dialog.open(CreateUpdateOperationDialogComponent, {
       data: {
         operation: operation
@@ -64,7 +64,7 @@ export class OperationsComponent {
     });
   }
 
-  onDeleteOperation(operation: Operation) {
+  onDelete(operation: Operation) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: 'Borrar operación', message: '¿Estás seguro de que deseas eliminar esta operación?' }
     });

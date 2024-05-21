@@ -62,7 +62,22 @@ export class CreateUpdateOperationDialogComponent {
   }
 
   update(): void {
-    alert('Method not implemented.');
+    this.operation.date = new Date(this.date);
+    this.apiManager.updateOperation(this.oldOperationId, this.operation).subscribe({
+      next: (response) => {
+        this.toastr.success('Operación actualizada correctamente', 'Actualización', {
+          timeOut: 3000,
+          positionClass: 'toast-bottom-right',
+        });
+        this.dialog.closeAll();
+      },
+      error: (error) => {
+        this.toastr.error('No se ha podido actualizar la Operación', 'Actualización', {
+          timeOut: 3000,
+          positionClass: 'toast-bottom-right',
+        });
+      }
+    });
   }
 
   formatDate(date: Date): string {
