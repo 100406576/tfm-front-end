@@ -7,6 +7,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PropertiesComponent } from './properties/properties.component';
 import { OperationsComponent } from './operations/operations.component';
+import { BalancesComponent } from './balances/balances.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   { path: 'properties', component: PropertiesComponent, canActivate: [AuthGuard]},
   { path: 'operations', component: OperationsComponent, canActivate: [AuthGuard]},
+  { path: 'balances', component: BalancesComponent, canActivate: [AuthGuard]},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo:'/home', pathMatch: 'full' }
 ];

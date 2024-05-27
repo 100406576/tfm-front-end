@@ -24,6 +24,7 @@
     "@types/googlemaps": "^3.43.3",
     "bootstrap": "^5.3.3",
     "bootswatch": "^5.3.3",
+    "chart.js": "^4.4.3",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

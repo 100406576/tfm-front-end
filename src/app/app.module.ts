@@ -29,6 +29,12 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { GeocodingService } from './shared/services/geocoding.service';
 import { OperationsComponent } from './operations/operations.component';
 import { CreateUpdateOperationDialogComponent } from './operations/create-update-operation-dialog/create-update-operation-dialog.component';
+import { BalancesComponent } from './balances/balances.component';
+import { BarChartComponent } from './shared/components/bar-chart/bar-chart.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { CustomDateAdapter } from '../utils/customerAdapter';
 
 @NgModule({
   declarations: [
@@ -42,7 +48,9 @@ import { CreateUpdateOperationDialogComponent } from './operations/create-update
     ReadPropertyDetailDialogComponent,
     CreateUpdatePropertyDialogComponent,
     OperationsComponent,
-    CreateUpdateOperationDialogComponent
+    CreateUpdateOperationDialogComponent,
+    BalancesComponent,
+    BarChartComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +67,9 @@ import { CreateUpdateOperationDialogComponent } from './operations/create-update
     MatSelectModule,
     MatSlideToggleModule,
     ToastrModule.forRoot(),
-    GoogleMapsModule
+    GoogleMapsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     ApiRestManagerService,
@@ -75,6 +85,18 @@ import { CreateUpdateOperationDialogComponent } from './operations/create-update
       useClass: ResponseInterceptor,
       multi: true,
     },
+    { provide: DateAdapter, useClass: CustomDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: {
+            parse: {
+                dateInput: 'DD/MM/YYYY',
+            },
+            display: {
+                dateInput: 'DD/MM/YYYY',
+                monthYearLabel: 'MMM YYYY',
+                dateA11yLabel: 'LL',
+                monthYearA11yLabel: 'MMMM YYYY',
+            },
+        }},
   ],
   bootstrap: [AppComponent]
 })

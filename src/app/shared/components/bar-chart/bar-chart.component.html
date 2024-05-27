@@ -1,0 +1,7 @@
+<div class="chart-container">
+    <canvas  id="MyChart" >{{ chart }}</canvas>
+    <button *ngIf="showExportButton" (click)="exportChart()" class="btn btn-info">
+        Exportar gráfico
+        <img src="../../assets/images/export.png" alt="Export icon" style="height: 40px; width: 40px;">
+    </button>
+</div>
