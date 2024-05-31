@@ -25,18 +25,14 @@
         <mat-form-field class="full-width">
             <mat-label>Valor</mat-label>
             <input [(ngModel)]="operation.value" name="value" id="value" #value="ngModel" matInput required type="number"
-                [min]="operation.type === 'income' ? 0 : null"
-                [max]="operation.type === 'expense' ? 0 : null"
-                placeholder="{{operation.type === 'income' ? 'Ingrese un valor positivo' : 'Ingrese un valor negativo'}}"
+                min="0"
+                placeholder="Ingrese cantidad"
             />
             <mat-error *ngIf="value.errors?.['required'] && (value.dirty || value.touched)">
                 El valor es obligatorio
             </mat-error>
             <mat-error *ngIf="value.errors?.['min'] && (value.dirty || value.touched)">
-                La operación es un ingreso y debe ser positivo
-            </mat-error>
-            <mat-error *ngIf="value.errors?.['max'] && (value.dirty || value.touched)">
-                La operación es un gasto y debe ser negativo
+                El valor debe ser positivo
             </mat-error>
         </mat-form-field>
     </form>

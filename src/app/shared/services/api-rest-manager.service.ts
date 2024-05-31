@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Property } from '../models/property.model';
 import { Operation } from '../models/operation.model';
+import { BarChartData } from '../models/bar-char-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -103,5 +104,15 @@ export class ApiRestManagerService {
   deleteOperation(operation_id: string) {
     const url = `${this.baseurl}operations/${operation_id}`;
     return this.http.delete(url, { observe: 'response' });
+  }
+
+  createBalance(property_id: string, dateRange: any, timeInterval:string): Observable<BarChartData> {
+    const url = `${this.baseurl}balances`;
+    const body = {
+      property_id,
+      dateRange,
+      timeInterval
+    };
+    return this.http.post<BarChartData>(url, body);
   }
 }

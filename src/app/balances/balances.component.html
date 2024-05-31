@@ -1,48 +1,57 @@
 <section class="background">
-<div class="py-5 h-100 formCharData">
-    <select [(ngModel)]="selectedProperty_id" class="select">
-        <option value="" disabled selected>Selecciona una propiedad</option>
-        <option *ngFor="let property of properties" [value]="property.property_id">{{property.propertyName}}
-        </option>
-    </select>
-
-    <select [disabled]="!selectedProperty_id" [(ngModel)]="selectedDateRange" class="select">
-        <option value="" disabled selected>Selecciona rango de fechas</option>
-        <option value="1">Último mes</option>
-        <option value="3">Últimos 3 meses</option>
-        <option value="6">Últimos 6 meses</option>
-        <option value="12">Último año</option>
-        <option value="custom">Rango personalizado</option>
-    </select>
-
-    <span *ngIf="selectedDateRange === 'custom'" class="spanDates">
-        <mat-form-field>
-            <mat-label>Fecha inicio</mat-label>
-            <input matInput [matDatepicker]="picker1" [(ngModel)]="customStartDate" name="customStartDate" id="customStartDate" required>
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
+    <div class="py-5 h-100">
+        <div class="formCharData">
+            <select [(ngModel)]="selectedProperty_id" class="select">
+                <option value="" disabled selected>Selecciona una propiedad</option>
+                <option *ngFor="let property of properties" [value]="property.property_id">{{property.propertyName}}
+                </option>
+            </select>
     
-        <mat-form-field>
-            <mat-label>Fecha fin</mat-label>
-            <input matInput [matDatepicker]="picker2" [(ngModel)]="customEndDate" name="customEndDate" id="customEndDate" required>
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
-    </span>
+            <select [disabled]="!selectedProperty_id" [(ngModel)]="selectedDateRange" class="select">
+                <option value="" disabled selected>Selecciona rango de fechas</option>
+                <option value="0">Mes actual</option>
+                <option value="1">Último mes</option>
+                <option value="3">Últimos 3 meses</option>
+                <option value="6">Últimos 6 meses</option>
+                <option value="12">Último año</option>
+                <option value="custom">Rango personalizado</option>
+            </select>
+    
+            <span *ngIf="selectedDateRange === 'custom'" class="spanDates">
+                <mat-form-field>
+                    <mat-label>Fecha inicio</mat-label>
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="customStartDate" name="customStartDate"
+                        id="customStartDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label>Fecha fin</mat-label>
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="customEndDate" name="customEndDate"
+                        id="customEndDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </span>
+    
+            <select [disabled]="!selectedDateRange" [(ngModel)]="selectedTimeInterval" class="select">
+                <option value="" disabled selected>Selecciona intervalo de tiempo</option>
+                <option [disabled]="selectedDateRange === 'custom' && calculateMonthsInRange() < 1" value="1">Mes</option>
+                <option
+                    [disabled]="(selectedDateRange !== 'custom' && +selectedDateRange < 3) || (selectedDateRange === 'custom' && calculateMonthsInRange() < 3)"
+                    value="3">Trimestral</option>
+                <option
+                    [disabled]="(selectedDateRange !== 'custom' && +selectedDateRange < 6) || (selectedDateRange === 'custom' && calculateMonthsInRange() < 6)"
+                    value="6">Semestral</option>
+                <option value="0">Sin intervalo</option>
+            </select>
+        </div>
+        <div class="d-grid mt-4 mb-4">
+            <button [disabled]="!selectedProperty_id || !selectedDateRange || !selectedTimeInterval"
+                (click)="generateBalance()" class="btn btn-lg btn-secondary">Generar balance</button>
+        </div>
+    </div>
 
-    <select [disabled]="!selectedDateRange" [(ngModel)]="selectedTimeInterval" class="select">
-        <option value="" disabled selected>Selecciona intervalo de tiempo</option>
-        <option [disabled]="selectedDateRange === 'custom' && calculateMonthsInRange() < 1" value="month">Mes</option>
-        <option [disabled]="(selectedDateRange !== 'custom' && +selectedDateRange < 3) || (selectedDateRange === 'custom' && calculateMonthsInRange() < 3)" value="quarter">Trimestral</option>
-        <option [disabled]="(selectedDateRange !== 'custom' && +selectedDateRange < 6) || (selectedDateRange === 'custom' && calculateMonthsInRange() < 6)" value="semester">Semestral</option>
-        <option value="none">Sin intervalo</option>
-    </select>
-</div>
-
-<div class="d-grid mb-5">
-    <button [disabled]="!selectedProperty_id || !selectedDateRange || !selectedTimeInterval" (click)="generateBalance()" class="btn btn-lg btn-primary">Generar balance</button>
-  </div>
-
-  <app-bar-chart *ngIf="isGeneratingBalance" [chartData]="charData" [showExportButton]="true"></app-bar-chart>
+    <app-bar-chart *ngIf="isBalanceGenerated" [chartData]="charData" [showExportButton]="true"></app-bar-chart>
 </section>

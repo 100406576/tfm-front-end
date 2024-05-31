@@ -4,6 +4,7 @@
     max-width: 600px;
     margin-left: 20px;
     margin-right: 20px;
+    margin-bottom: 20px;
     padding: 10px;
     font-size: 1.25em;
     line-height: 1.3;
@@ -23,7 +24,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -32,4 +32,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.btn.btn-lg.btn-secondary {
+    background: -webkit-linear-gradient(bottom right, rgba(142, 140, 132, 1), rgba(62, 63, 58, 1));
+    background: linear-gradient(to bottom right, rgba(142, 140, 132, 1), rgba(62, 63, 58, 1));
+    color: white;
+    border: none;
+    transition: filter 0.3s ease;
+}
+
+.btn.btn-lg.btn-secondary:hover {
+    filter: brightness(85%);
 }

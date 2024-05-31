@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BarChartData } from '../shared/models/bar-char-data.model';
 import { Property } from '../shared/models/property.model';
 import { ApiRestManagerService } from '../shared/services/api-rest-manager.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-balances',
@@ -9,22 +10,18 @@ import { ApiRestManagerService } from '../shared/services/api-rest-manager.servi
   styleUrls: ['./balances.component.css']
 })
 export class BalancesComponent {
-  charData: BarChartData;
+  charData!: BarChartData;
   properties!: Property[];
   selectedProperty_id: string = '';
   selectedDateRange: string = '';
   customStartDate: Date = new Date();
   customEndDate: Date = new Date();
   selectedTimeInterval: string = '';
-  isGeneratingBalance: boolean = false;
+  isBalanceGenerated: boolean = false;
 
-  constructor(public apiManager: ApiRestManagerService) {
-    this.charData = new BarChartData(
-      ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    );
-  }
+  constructor(public apiManager: ApiRestManagerService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.apiManager.getUserProperties().subscribe((properties) => {
@@ -33,15 +30,43 @@ export class BalancesComponent {
   }
 
   generateBalance() {
-    this.isGeneratingBalance = true;
-  
-    const data = {
-      propertyId: this.selectedProperty_id,
-      dateRange: this.selectedDateRange,
-      timeInterval: this.selectedTimeInterval
-    };
-  
-    alert(JSON.stringify(data));
+    this.isBalanceGenerated = false;
+    const dateRange = this.calculateDateRange();
+    this.apiManager.createBalance(this.selectedProperty_id, dateRange, this.selectedTimeInterval).subscribe({
+      next: (barChartData) => {
+        this.charData = barChartData;
+        this.isBalanceGenerated = true;
+      },
+      error: (error) => {
+        this.toastr.error('Error al generar el balance', 'Balance', {
+          timeOut: 3000,
+          positionClass: 'toast-bottom-right',
+        });
+        this.isBalanceGenerated = false;
+      }
+    });
+  }
+
+  calculateDateRange(): { startDate: Date, endDate: Date } {
+    let endDate = new Date();
+    endDate.setDate(1); // Set the end date to the first day of the current month
+    let startDate = new Date(endDate);
+
+    if (['0', '1', '3', '6', '12'].includes(this.selectedDateRange)) {
+      if (this.selectedDateRange !== '0') {
+        startDate.setMonth(startDate.getMonth() - Number(this.selectedDateRange));
+        startDate.setDate(1);
+        endDate.setDate(endDate.getDate() - 1); // Set the end date to the last day of the previous month
+      } else { // current month
+        startDate.setDate(1);
+        endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+      }
+    } else { // custom range
+      startDate = this.customStartDate;
+      endDate = this.customEndDate;
+    }
+
+    return { startDate, endDate };
   }
 
   calculateMonthsInRange(): number {
@@ -53,11 +78,11 @@ export class BalancesComponent {
     let days = endDate.getDate() - startDate.getDate();
 
     if (days < 0) {
-        months--;
+      months--;
     }
 
     months += years * 12;
 
     return months <= 0 ? 0 : months;
-}
+  }
 }
