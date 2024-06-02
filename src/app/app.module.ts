@@ -35,6 +35,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CustomDateAdapter } from '../utils/customerAdapter';
+import { DocumentsComponent } from './documents/documents.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CustomDateAdapter } from '../utils/customerAdapter';
     OperationsComponent,
     CreateUpdateOperationDialogComponent,
     BalancesComponent,
-    BarChartComponent
+    BarChartComponent,
+    DocumentsComponent
   ],
   imports: [
     BrowserModule,

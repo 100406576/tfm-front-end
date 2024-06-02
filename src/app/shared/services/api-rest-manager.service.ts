@@ -115,4 +115,9 @@ export class ApiRestManagerService {
     };
     return this.http.post<BarChartData>(url, body);
   }
+
+  uploadDocument(formData: FormData) {
+    const url = `${this.baseurl}documents`;
+    return this.http.post(url, formData, { observe: 'response' });
+  }
 }
