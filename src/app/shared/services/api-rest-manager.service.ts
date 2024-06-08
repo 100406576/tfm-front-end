@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Property } from '../models/property.model';
 import { Operation } from '../models/operation.model';
 import { BarChartData } from '../models/bar-char-data.model';
+import { Document } from '../models/document.model';
 
 @Injectable({
   providedIn: 'root'
@@ -106,7 +107,7 @@ export class ApiRestManagerService {
     return this.http.delete(url, { observe: 'response' });
   }
 
-  createBalance(property_id: string, dateRange: any, timeInterval:string): Observable<BarChartData> {
+  createBalance(property_id: string, dateRange: any, timeInterval: number): Observable<BarChartData> {
     const url = `${this.baseurl}balances`;
     const body = {
       property_id,
@@ -119,5 +120,25 @@ export class ApiRestManagerService {
   uploadDocument(formData: FormData) {
     const url = `${this.baseurl}documents`;
     return this.http.post(url, formData, { observe: 'response' });
+  }
+
+  readDocumentsOfUser(): Observable<Document[]> {
+    const url = `${this.baseurl}documents`;
+    return this.http.get<Document[]>(url);
+  }
+
+  readDocument(documentId: string): Observable<HttpResponse<Blob>> {
+    const url = `${this.baseurl}documents/${documentId}`;
+    return this.http.get(url, { observe: 'response', responseType: 'blob' });
+  }
+
+  deleteDocument(documentId: string) {
+    const url = `${this.baseurl}documents/${documentId}`;
+    return this.http.delete(url, { observe: 'response' });
+  }
+
+  deleteDocumentsOfUser() {
+    const url = `${this.baseurl}documents`;
+    return this.http.delete(url, { observe: 'response' });
   }
 }

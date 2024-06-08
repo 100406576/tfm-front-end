@@ -36,6 +36,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CustomDateAdapter } from '../utils/customerAdapter';
 import { DocumentsComponent } from './documents/documents.component';
+import { UploadFileDialogComponent } from './shared/components/upload-file-dialog/upload-file-dialog.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { DocumentsComponent } from './documents/documents.component';
     CreateUpdateOperationDialogComponent,
     BalancesComponent,
     BarChartComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    UploadFileDialogComponent
   ],
   imports: [
     BrowserModule,

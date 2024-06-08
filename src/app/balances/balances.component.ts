@@ -32,7 +32,7 @@ export class BalancesComponent {
   generateBalance() {
     this.isBalanceGenerated = false;
     const dateRange = this.calculateDateRange();
-    this.apiManager.createBalance(this.selectedProperty_id, dateRange, this.selectedTimeInterval).subscribe({
+    this.apiManager.createBalance(this.selectedProperty_id, dateRange, Number(this.selectedTimeInterval)).subscribe({
       next: (barChartData) => {
         this.charData = barChartData;
         this.isBalanceGenerated = true;

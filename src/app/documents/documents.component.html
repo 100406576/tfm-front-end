@@ -1,6 +1,66 @@
 <section class="background">
-    <form (submit)="onSubmit()">
-        <input type="file" (change)="onFileSelected($event)" />
-        <button type="submit">Subir archivo</button>
-    </form>
+    <div class="py-5 h-100">
+        <mat-card class>
+            <mat-card-content>
+                <mat-table #table [dataSource]="documents" class="mat-elevation-z8">
+                    <!-- Document Name Column -->
+                    <ng-container matColumnDef="documentName">
+                        <mat-header-cell *matHeaderCellDef> Nombre del documento </mat-header-cell>
+                        <mat-cell *matCellDef="let document"> {{document.documentName}} </mat-cell>
+                    </ng-container>
+
+                    <!-- File Type Column -->
+                    <ng-container matColumnDef="fileType">
+                        <mat-header-cell *matHeaderCellDef class="center-cell"> Tipo de archivo </mat-header-cell>
+                        <mat-cell *matCellDef="let document" class="center-cell">
+                            <mat-icon *ngIf="document.mimetype === 'application/pdf'">picture_as_pdf</mat-icon>
+                            <mat-icon *ngIf="document.mimetype === 'image/jpeg'">image</mat-icon>
+                            <mat-icon *ngIf="document.mimetype === 'image/png'">image</mat-icon>
+                            <mat-icon
+                                *ngIf="document.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'">description</mat-icon>
+                            <!-- Add more icons for different file types here -->
+                        </mat-cell>
+                    </ng-container>
+
+
+                    <!-- Created date-->
+                    <ng-container matColumnDef="createdAt">
+                        <mat-header-cell *matHeaderCellDef class="center-cell"> Fecha de subida </mat-header-cell>
+                        <mat-cell *matCellDef="let document" class="center-cell"> {{document.createdAt | date: 'dd/MM/yyyy'}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef class="center-cell">
+                            <button class="action-button" (click)="onFileUpload()" mat-button mat-icon-button matSuffix>
+                                <mat-icon>upload_file</mat-icon>
+                            </button>
+                            <button class="action-button" (click)="onDeleteDocuments()" mat-button mat-icon-button matSuffix>
+                                <mat-icon color="warn">delete_sweep</mat-icon>
+                            </button>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let document" class="center-cell">
+                            <button class="action-button" (click)="onSeeDocument(document.document_id)" mat-button
+                                mat-icon-button matSuffix>
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                            <button class="action-button"
+                                (click)="onDownloadDocument(document.document_id, document.documentName)" mat-button
+                                mat-icon-button matSuffix>
+                                <mat-icon>download</mat-icon>
+                            </button>
+                            <button class="action-button" (click)="onDeleteDocument(document.document_id)" mat-button
+                                mat-icon-button matSuffix>
+                                <mat-icon color="warn">delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row
+                        *matHeaderRowDef="['documentName', 'fileType', 'createdAt', 'actions']"></mat-header-row>
+                    <mat-row
+                        *matRowDef="let row; columns: ['documentName', 'fileType', 'createdAt', 'actions']"></mat-row>
+                </mat-table>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </section>
