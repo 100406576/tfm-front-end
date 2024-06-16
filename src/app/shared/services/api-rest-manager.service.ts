@@ -8,6 +8,7 @@ import { Property } from '../models/property.model';
 import { Operation } from '../models/operation.model';
 import { BarChartData } from '../models/bar-char-data.model';
 import { Document } from '../models/document.model';
+import { TaxReturn } from '../models/tax-return.model';
 
 @Injectable({
   providedIn: 'root'
@@ -140,5 +141,17 @@ export class ApiRestManagerService {
   deleteDocumentsOfUser() {
     const url = `${this.baseurl}documents`;
     return this.http.delete(url, { observe: 'response' });
+  }
+
+  calculateTaxReturn(property_id: string, fiscalYear: number, numberOfDaysRented: number, previousYearsImprovements: number | undefined, currentYearImprovements: number | undefined): Observable<TaxReturn> {
+    const url = `${this.baseurl}tax-return`;
+    const body = {
+      property_id,
+      fiscalYear,
+      numberOfDaysRented,
+      previousYearsImprovements,
+      currentYearImprovements
+    };
+    return this.http.post<TaxReturn>(url, body);
   }
 }

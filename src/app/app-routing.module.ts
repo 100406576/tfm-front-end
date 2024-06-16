@@ -9,6 +9,7 @@ import { PropertiesComponent } from './properties/properties.component';
 import { OperationsComponent } from './operations/operations.component';
 import { BalancesComponent } from './balances/balances.component';
 import { DocumentsComponent } from './documents/documents.component';
+import { TaxReturnComponent } from './tax-return/tax-return.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'operations', component: OperationsComponent, canActivate: [AuthGuard]},
   { path: 'balances', component: BalancesComponent, canActivate: [AuthGuard]},
   { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard]},
+  { path: 'tax-return', component: TaxReturnComponent, canActivate: [AuthGuard]},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo:'/home', pathMatch: 'full' }
 ];

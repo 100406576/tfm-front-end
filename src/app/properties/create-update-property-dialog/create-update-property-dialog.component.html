@@ -22,6 +22,26 @@
                 La referencia catastral es obligatoria
             </mat-error>
         </mat-form-field>
+        <div class="form-row">
+            <mat-form-field class="half-width">
+                <mat-label>Valor catastral</mat-label>
+                <input [(ngModel)]="property.cadastralValue" name="cadastralValue" id="cadastralValue" matInput type="number" step="0.01" min="0"/>
+            </mat-form-field>
+            <mat-form-field class="half-width">
+                <mat-label>Valor de construcción</mat-label>
+                <input [(ngModel)]="property.constructionValue" name="constructionValue" id="constructionValue" matInput type="number" step="0.01" min="0"/>
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <mat-form-field class="half-width">
+                <mat-label>Valor de adquisición</mat-label>
+                <input [(ngModel)]="property.acquisitionValue" name="acquisitionValue" id="acquisitionValue" matInput type="number" step="0.01" min="0"/>
+            </mat-form-field>
+            <mat-form-field class="half-width">
+                <mat-label>Costos de adquisición</mat-label>
+                <input [(ngModel)]="property.acquisitionCosts" name="acquisitionCosts" id="acquisitionCosts" matInput type="number" step="0.01" min="0"/>
+            </mat-form-field>
+        </div>
         <mat-form-field class="full-width">
             <mat-label>Tipo de propiedad</mat-label>
             <mat-select [(ngModel)]="propertyType" name="propertyType" id="propertyType" [disabled]="!isCreate()">

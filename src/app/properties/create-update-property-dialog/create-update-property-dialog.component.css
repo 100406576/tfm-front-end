@@ -1,4 +1,12 @@
 .full-width {
     width: 100%;
 }
-  
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.half-width {
+    width: 48%;
+}

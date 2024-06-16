@@ -37,6 +37,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { CustomDateAdapter } from '../utils/customerAdapter';
 import { DocumentsComponent } from './documents/documents.component';
 import { UploadFileDialogComponent } from './shared/components/upload-file-dialog/upload-file-dialog.component';
+import { TaxReturnComponent } from './tax-return/tax-return.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { UploadFileDialogComponent } from './shared/components/upload-file-dialo
     BalancesComponent,
     BarChartComponent,
     DocumentsComponent,
-    UploadFileDialogComponent
+    UploadFileDialogComponent,
+    TaxReturnComponent
   ],
   imports: [
     BrowserModule,
@@ -90,17 +92,19 @@ import { UploadFileDialogComponent } from './shared/components/upload-file-dialo
       multi: true,
     },
     { provide: DateAdapter, useClass: CustomDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: {
-            parse: {
-                dateInput: 'DD/MM/YYYY',
-            },
-            display: {
-                dateInput: 'DD/MM/YYYY',
-                monthYearLabel: 'MMM YYYY',
-                dateA11yLabel: 'LL',
-                monthYearA11yLabel: 'MMMM YYYY',
-            },
-        }},
+    {
+      provide: MAT_DATE_FORMATS, useValue: {
+        parse: {
+          dateInput: 'DD/MM/YYYY',
+        },
+        display: {
+          dateInput: 'DD/MM/YYYY',
+          monthYearLabel: 'MMM YYYY',
+          dateA11yLabel: 'LL',
+          monthYearA11yLabel: 'MMMM YYYY',
+        },
+      }
+    },
   ],
   bootstrap: [AppComponent]
 })

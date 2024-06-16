@@ -4,6 +4,10 @@ export class Property {
     address: string;
     cadastralReference: string;
     user_id: string;
+    cadastralValue?: number;
+    constructionValue?: number;
+    acquisitionValue? : number;
+    acquisitionCosts?: number;
     houseDetails?: House;
     flatDetails?: Flat;
     garageDetails?: Garage;

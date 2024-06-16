@@ -1,0 +1,119 @@
+<div class="background">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white corners">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-md-2 mt-md-2 pb-2">
+
+                            <form id="propertyForm" #propertyForm="ngForm"
+                                (ngSubmit)="onSubmit(); propertyForm.control.markAllAsTouched()">
+                                <div class="form-floating mb-4">
+                                    <select [(ngModel)]="selectedProperty_id"
+                                        (change)="onPropertyChange(selectedProperty_id)" class="form-control"
+                                        name="property_id" id="property_id" #property_id="ngModel" required>
+                                        <option value="" disabled selected>Selecciona una propiedad</option>
+                                        <option *ngFor="let property of properties" [value]="property.property_id">
+                                            {{property.propertyName}}
+                                        </option>
+                                    </select>
+                                    <label for="property_id">Propiedad*</label>
+                                    <div *ngIf="property_id.errors?.['required'] && (property_id.dirty || property_id.touched)"
+                                        class="alert alert-danger">
+                                        La propiedad es obligatoria
+                                    </div>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input type="number" id="fiscalYear" name="fiscalYear" [(ngModel)]="fiscalYear"
+                                        class="form-control" required min="1900" max="2099" placeholder="Año fiscal"
+                                        #fiscalYearInput="ngModel">
+                                    <label for="fiscalYear">Año fiscal*</label>
+                                    <div *ngIf="fiscalYearInput.errors?.['required'] && (fiscalYearInput.dirty || fiscalYearInput.touched)"
+                                        class="alert alert-danger">
+                                        El año fiscal es obligatorio
+                                    </div>
+                                    <div *ngIf="fiscalYearInput.errors?.['min'] || fiscalYearInput.errors?.['max']"
+                                        class="alert alert-danger">
+                                        Por favor, introduce un año válido (1900-2099)
+                                    </div>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input type="number" id="rentDays" name="rentDays" [(ngModel)]="numberOfDaysRented"
+                                        class="form-control" required min="0" max="365"
+                                        placeholder="Número de días que se ha alquilado la propiedad"
+                                        #rentDays="ngModel">
+                                    <label for="rentDays">Número de días que se ha alquilado la propiedad*</label>
+                                    <div *ngIf="rentDays.errors?.['required'] && (rentDays.dirty || rentDays.touched)"
+                                        class="alert alert-danger">
+                                        El número de días que se ha alquilado la propiedad es obligatorio
+                                    </div>
+                                    <div *ngIf="rentDays.errors?.['min'] || rentDays.errors?.['max']"
+                                        class="alert alert-danger">
+                                        Por favor, introduce un número de días válido (0-365)
+                                    </div>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input type="number" id="cadastralValue" name="cadastralValue"
+                                        [(ngModel)]="selectedProperty.cadastralValue" class="form-control" readonly
+                                        placeholder="Valor catastral">
+                                    <label for="cadastralValue">Valor castastral*</label>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input type="number" id="constructionValue" name="constructionValue"
+                                        [(ngModel)]="selectedProperty.constructionValue" class="form-control" readonly
+                                        placeholder="Valor catastral construcción">
+                                    <label for="constructionValue">Valor catastral construcción*</label>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input type="number" id="acquisitionValue" name="acquisitionValue"
+                                        [(ngModel)]="selectedProperty.acquisitionValue" class="form-control" readonly
+                                        placeholder="Importe de adquisición">
+                                    <label for="acquisitionValue">Importe de adquisición*</label>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input type="number" id="acquisitionCosts" name="acquisitionCosts"
+                                        [(ngModel)]="selectedProperty.acquisitionCosts" class="form-control" readonly
+                                        placeholder="Gastos y tributos de adquisición">
+                                    <label for="acquisitionCosts">Gastos y tributos de adquisición*</label>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input type="number" id="previousYearsImprovements" name="previousYearsImprovements"
+                                        [(ngModel)]="previousYearsImprovements" class="form-control"
+                                        placeholder="Importe Mejoras año anteriores">
+                                    <label for="previousYearsImprovements">Importe mejoras año anteriores</label>
+                                </div>
+
+                                <div class="form-floating mb-4">
+                                    <input type="number" id="currentYearImprovements" name="currentYearImprovements"
+                                        [(ngModel)]="currentYearImprovements" class="form-control"
+                                        placeholder="Importe mejoras ejercicio actual">
+                                    <label for="currentYearImprovements">Importe mejoras ejercicio actual</label>
+                                </div>
+
+                                <button type="submit" class="btn btn-outline-light btn-lg px-5 mt-5"
+                                    [disabled]="!isFormValid()">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="isTaxReturnGenerated" class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white corners">
+                    <div class="card-body p-5 text-center">
+                        <h2 class="mb-4">Resultado de la declaración de la renta ({{taxReturn.fiscalYear}})</h2>
+                        <p><strong>Renta imponible:</strong> {{taxReturn.taxableIncome | number: '1.2-2' }}</p>
+                        <p><strong>Gastos deducibles:</strong> {{taxReturn.deductibleExpenses | number: '1.2-2' }}</p>
+                        <p><strong>Gastos deducible en concepto de amortización:</strong> {{taxReturn.amortization | number: '1.2-2' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
