@@ -2,30 +2,53 @@
 
 [![Angular - Tests](https://github.com/100406576/tfm-front-end/actions/workflows/angular-test-sonar.yml/badge.svg)](https://github.com/100406576/tfm-front-end/actions/workflows/angular-test-sonar.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=100406576%3Atfm-front-end&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=100406576%3Atfm-front-end)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
+Este proyecto ha sido generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
 
-## Development server
+## Requisitos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Node.js
+- npm
 
-## Code scaffolding
+## Instalación
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Primero, clona el repositorio:
 
-## Build
+```bash
+git clone https://github.com/100406576/tfm-front-end.git
+cd tfm-back-end
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Luego, instala las dependencias:
 
-## Running unit tests
+```bash
+npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Configuración
+Para que el proyecto funcione correctamente, especialmente las funcionalidades relacionadas con Google Maps, es necesario configurar adecuadamente el archivo `src/environments/environment.ts`. Este archivo contiene las configuraciones específicas del entorno que se utilizan en el proyecto, incluyendo la clave API de Google necesaria para los servicios de Google Maps.
 
-## Running end-to-end tests
+### Configuración de la Clave API de Google
+En el archivo `src/environments/environment.ts`, encontrarás una propiedad llamada googleApiKey. Debes reemplazar 'YOUR_API_KEY' con tu clave API de Google personal
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Uso del Proxy para Desarrollo Local
+Para evitar problemas de CORS (Cross-Origin Resource Sharing) al realizar solicitudes a la API de Google Maps desde el entorno de desarrollo local, se utiliza un archivo de configuración de proxy. Esto permite que las solicitudes a Google Maps parezcan originarse desde el mismo dominio que el servidor de desarrollo, evitando así los errores de CORS.
 
-## Further help
+El archivo `proxy.conf.json` se utiliza para configurar el proxy. Aquí está la configuración actual utilizada para redirigir las solicitudes a Google Maps:
+```json
+{
+  "/maps": {
+    "target": "https://maps.google.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/maps": "/maps"
+    }
+  }
+}
+```
+## Scripts
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- `npm start`: Este comando inicia el servidor de desarrollo local y automáticamente aplica la configuración del proxy definida en el archivo `proxy.conf.json`.
+
 
 
