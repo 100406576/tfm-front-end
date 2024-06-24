@@ -28,7 +28,7 @@ npm install
 Para que el proyecto funcione correctamente, especialmente las funcionalidades relacionadas con Google Maps, es necesario configurar adecuadamente el archivo `src/environments/environment.ts`. Este archivo contiene las configuraciones específicas del entorno que se utilizan en el proyecto, incluyendo la clave API de Google necesaria para los servicios de Google Maps.
 
 ### Configuración de la Clave API de Google
-En el archivo `src/environments/environment.ts`, encontrarás una propiedad llamada googleApiKey. Debes reemplazar 'YOUR_API_KEY' con tu clave API de Google personal
+En el archivo `src/environments/environment.ts`, encontrarás una propiedad llamada googleApiKey. Debes reemplazar 'YOUR_GOOGLE_API_KEY' con tu clave API de Google personal
 
 ### Uso del Proxy para Desarrollo Local
 Para evitar problemas de CORS (Cross-Origin Resource Sharing) al realizar solicitudes a la API de Google Maps desde el entorno de desarrollo local, se utiliza un archivo de configuración de proxy. Esto permite que las solicitudes a Google Maps parezcan originarse desde el mismo dominio que el servidor de desarrollo, evitando así los errores de CORS.
