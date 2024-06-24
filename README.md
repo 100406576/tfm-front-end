@@ -15,7 +15,7 @@ Primero, clona el repositorio:
 
 ```bash
 git clone https://github.com/100406576/tfm-front-end.git
-cd tfm-back-end
+cd tfm-front-end
 ```
 
 Luego, instala las dependencias:
